@@ -30,6 +30,12 @@ public class IsaacStageManagerEditor : Editor
         }
     }
 
+    /// <summary>
+    /// Finds all DoorController instances in the scene and attempts to set their state to Open,
+    /// unless they are currently in the 'Wall' state.
+    /// Logs the outcome of the operation.
+    /// </summary>
+    /// <param name="manager">The IsaacStageManager instance, used for context in logging.</param>
     private void OpenAllDoorsInScene(IsaacStageManager manager)
     {
         DoorController[] allDoors = FindObjectsByType<DoorController>(FindObjectsSortMode.None);

@@ -2,19 +2,44 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Factory class responsible for creating, initializing, and connecting rooms and their doors within the stage.
+/// It uses room templates and a grid system to manage room placement and instantiation.
+/// </summary>
 public class SpecialRoomFactory
 {
-    private Dictionary<RoomType, List<RoomTemplate>> _roomTemplates;
-    private Transform _defaultParent;
-    private float _roomWorldSeparation; // New field for separation
-    
-    public SpecialRoomFactory(Dictionary<RoomType, List<RoomTemplate>> roomTemplates, Transform defaultParent = null, float roomWorldSeparation = 50f) // Added roomWorldSeparation
+    private readonly Dictionary<RoomType, List<RoomTemplate>> _roomTemplates;
+    private readonly Transform _defaultParent;
+    private readonly float _roomWorldSeparation;
+
+    private const float DefaultRoomWorldSeparation = 50f;
+    private const float RoomGizmoDepth = 0.1f;
+    private const float DoorGizmoRadius = 1f;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SpecialRoomFactory"/> class.
+    /// </summary>
+    /// <param name="roomTemplates">A dictionary mapping room types to lists of available templates.</param>
+    /// <param name="defaultParent">The default parent transform for instantiated room GameObjects. Can be null.</param>
+    /// <param name="roomWorldSeparation">The separation distance in world units between the centers of adjacent rooms.</param>
+    public SpecialRoomFactory(Dictionary<RoomType, List<RoomTemplate>> roomTemplates, Transform defaultParent = null, float roomWorldSeparation = DefaultRoomWorldSeparation)
     {
         _roomTemplates = roomTemplates;
         _defaultParent = defaultParent;
-        _roomWorldSeparation = roomWorldSeparation; // Assign to the new field
+        _roomWorldSeparation = roomWorldSeparation;
     }
 
+    /// <summary>
+    /// Creates and initializes a room of a specified type at a given grid position.
+    /// </summary>
+    /// <param name="type">The <see cref="RoomType"/> of the room to create.</param>
+    /// <param name="position">The grid position (<see cref="Vector2Int"/>) where the room should be placed.</param>
+    /// <param name="specificTemplate">A specific <see cref="RoomTemplate"/> to use. If null, a random template for the type will be chosen.</param>
+    /// <param name="parent">The parent transform for the new room GameObject. If null, <see cref="_defaultParent"/> will be used.</param>
+    /// <param name="doorPrefab">The prefab to use for instantiating doors. If null, doors will not be created.</param>
+    /// <param name="random">A <see cref="System.Random"/> instance for template selection. If null, <see cref="UnityEngine.Random"/> will be used.</param>
+    /// <param name="entryDirection">An optional <see cref="Direction"/> indicating an entry point. Doors in this direction might be excluded from <see cref="RoomPlacementResult.AvailableOutgoingDoors"/>.</param>
+    /// <returns>A <see cref="RoomPlacementResult"/> containing the placed room and its available outgoing doors. Returns null or a result with Success=false if creation fails.</returns>
     public RoomPlacementResult CreateRoom(RoomType type, Vector2Int position, RoomTemplate specificTemplate = null, Transform parent = null, GameObject doorPrefab = null, System.Random random = null, Direction? entryDirection = null)
     {
         try
@@ -102,6 +127,15 @@ public class SpecialRoomFactory
         }
     }
     
+    /// <summary>
+    /// Creates and configures doors for a given room based on its template's door configurations.
+    /// </summary>
+    /// <param name="room">The <see cref="Room"/> for which to create doors.</param>
+    /// <param name="doorPrefab">The <see cref="GameObject"/> prefab to use for instantiating doors.</param>
+    /// <remarks>
+    /// This method assumes the <paramref name="room"/> has a valid <see cref="Room.template"/> assigned.
+    /// Doors are initially set to a hidden state.
+    /// </remarks>
     public void CreateDoorsForRoom(Room room, GameObject doorPrefab)
     {
         if (room.template == null)
@@ -143,6 +177,11 @@ public class SpecialRoomFactory
         }
     }
     
+    /// <summary>
+    /// Orients a door GameObject based on its specified <see cref="Direction"/>.
+    /// </summary>
+    /// <param name="doorObj">The door <see cref="GameObject"/> to orient.</param>
+    /// <param name="direction">The <see cref="Direction"/> the door should face.</param>
     private void OrientDoorBasedOnDirection(GameObject doorObj, Direction direction)
     {
         // Rotate door based on its direction
@@ -158,12 +197,25 @@ public class SpecialRoomFactory
         doorObj.transform.localRotation = Quaternion.Euler(0, 0, rotation);
     }
 
+    /// <summary>
+    /// Calculates the world position for a room based on its grid position and the configured room separation.
+    /// </summary>
+    /// <param name="gridPosition">The <see cref="Vector2Int"/> grid coordinates of the room.</param>
+    /// <returns>The <see cref="Vector3"/> world position for the center of the room.</returns>
     public Vector3 GetWorldPosition(Vector2Int gridPosition)
     {
         // Use _roomWorldSeparation for spacing instead of _roomSize
         return new Vector3(gridPosition.x * _roomWorldSeparation, gridPosition.y * _roomWorldSeparation, 0);
     }
 
+    /// <summary>
+    /// Iterates through all rooms in the provided <see cref="StageGrid"/> and attempts to connect adjacent rooms by linking their doors.
+    /// </summary>
+    /// <param name="grid">The <see cref="StageGrid"/> containing the rooms to connect.</param>
+    /// <remarks>
+    /// This method calls <see cref="ConnectDoorsInDirection"/> for each potential connection.
+    /// Doors that cannot be connected (e.g., no adjacent room or no corresponding door) are typically set to a "Wall" state.
+    /// </remarks>
     public void ConnectRoomsInGrid(StageGrid grid)
     {
         if (grid == null)
@@ -198,6 +250,19 @@ public class SpecialRoomFactory
         Debug.Log($"[RoomFactory] Finished ConnectRoomsInGrid. Total connections attempted/made in this call: {connectionsCreated}");
     }
 
+    /// <summary>
+    /// Attempts to connect a door in the current room to a corresponding door in an adjacent room.
+    /// </summary>
+    /// <param name="room">The current <see cref="Room"/> from which the connection originates.</param>
+    /// <param name="grid">The <see cref="StageGrid"/> used to find the adjacent room.</param>
+    /// <param name="direction">The <see cref="Direction"/> from the current room towards the potential adjacent room.</param>
+    /// <param name="adjacentPos">The grid position (<see cref="Vector2Int"/>) of the potential adjacent room.</param>
+    /// <returns><c>true</c> if the doors were successfully connected; otherwise, <c>false</c>.</returns>
+    /// <remarks>
+    /// If no adjacent room exists, or if the adjacent room does not have a corresponding door,
+    /// the door in the current room is set to a "Wall" state.
+    /// Uses <see cref="DirectionUtils.GetOppositeDirection"/> for finding the matching door direction.
+    /// </remarks>
     private bool ConnectDoorsInDirection(Room room, StageGrid grid, Direction direction, Vector2Int adjacentPos)
     {
         Debug.Log($"[RoomFactory] Attempting to connect doors for room {room.gridPosition} in direction {direction} to {adjacentPos}");
@@ -218,7 +283,7 @@ public class SpecialRoomFactory
             return false;
         }
 
-        Direction oppositeDirection = DoorController.GetOppositeDirection(direction);
+        Direction oppositeDirection = DirectionUtils.GetOppositeDirection(direction); // Changed for consistency
 
         if (!adjacentRoom.doors.ContainsKey(oppositeDirection))
         {
@@ -248,6 +313,11 @@ public class SpecialRoomFactory
         }
     }
 
+    /// <summary>
+    /// Draws Gizmos in the Unity editor to visualize the rooms and their types within the grid.
+    /// </summary>
+    /// <param name="grid">The <see cref="StageGrid"/> containing the rooms to visualize.</param>
+    /// <remarks>This method should typically be called from an `OnDrawGizmos` method of a MonoBehaviour.</remarks>
     public void DrawRoomGizmos(StageGrid grid)
     {
         if (grid == null) return;
@@ -274,7 +344,7 @@ public class SpecialRoomFactory
                         _ => Color.white
                     };
                     
-                    Gizmos.DrawWireCube(worldPos, new Vector3(_roomWorldSeparation, _roomWorldSeparation, 0.1f));
+                    Gizmos.DrawWireCube(worldPos, new Vector3(_roomWorldSeparation, _roomWorldSeparation, RoomGizmoDepth));
                     
                     DrawDoorGizmos(room, worldPos);
                 }
@@ -282,6 +352,11 @@ public class SpecialRoomFactory
         }
     }
     
+    /// <summary>
+    /// Draws Gizmos for the connected doors of a specific room.
+    /// </summary>
+    /// <param name="room">The <see cref="Room"/> whose connected doors are to be visualized.</param>
+    /// <param name="roomCenter">The world center position of the room.</param>
     private void DrawDoorGizmos(Room room, Vector3 roomCenter)
     {
         Gizmos.color = Color.blue;
@@ -299,7 +374,7 @@ public class SpecialRoomFactory
                 };
                 
                 Vector3 doorPos = roomCenter + doorOffset;
-                Gizmos.DrawSphere(doorPos, 1f);
+                Gizmos.DrawSphere(doorPos, DoorGizmoRadius);
             }
         }
     }
