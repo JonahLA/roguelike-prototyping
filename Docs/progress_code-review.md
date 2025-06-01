@@ -52,7 +52,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/IsaacStageGenerator.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/IsaacStageGenerator.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/IsaacStageGenerator.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -62,7 +62,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/IsaacStageManager.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/IsaacStageManager.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/IsaacStageManager.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
