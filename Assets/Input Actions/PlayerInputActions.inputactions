@@ -1,0 +1,109 @@
+{
+    "name": "PlayerInputActions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "cc7f2b22-e1f0-4b27-a95c-15eb144f8235",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "b5450b2e-4041-4441-97ad-286a91f055c8",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Open fullscreen map",
+                    "type": "Button",
+                    "id": "cf77baf2-bde2-47d6-9192-ff8083d7b1df",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2189dcdb-62ee-4d7b-b176-d46df1f4359f",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "c6c42d58-06bb-4722-bf3f-13dcd1bfef26",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "f055f13e-f4f3-4196-a74e-21f4eb94b0be",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "75131268-6c29-4e12-983c-e312602fe927",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "cfd6e4f3-c6ea-4df1-bae7-eea2a0dcf3fa",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "370c611c-29b3-4967-929a-425600548f64",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "eb5f9458-a217-488e-90db-fa54978b81bd",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open fullscreen map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ad1e307fd70d147a949afe5c772b3b, type: 3}
+  m_Name: SD_Default
+  m_EditorClassIdentifier: 
+  roomPrefabs:
+  - {fileID: 2804761324857611709, guid: 5195d93aa78e59e44bce16229429f3e2, type: 3}
+  - {fileID: 7206743497076169649, guid: 5346a24ecd4deb6409834d6c85e52b56, type: 3}
+  - {fileID: 7206743497076169649, guid: 0f26f95371b116a48814e837778270a2, type: 3}
+  - {fileID: 4398997959601660852, guid: bedbdf108817497408080ccddebaf7a2, type: 3}
+  - {fileID: 6727303089501777494, guid: a29fa4c386ee4c840abc1992c92de00f, type: 3}
+  - {fileID: 2804761324857611709, guid: ff38d09eb17953e4e9f9c5e2ff18e9b2, type: 3}
+  maxRooms: 10
+  maxBranching: 2
+  floorTilePrefab: {fileID: 7112526105564603458, guid: 51c0d235588a7134e9c13a2b091195e5, type: 3}
+  playerPrefab: {fileID: 6842126363844183855, guid: ad57f6216b196b84ebd45379b7b6a6a9, type: 3}
