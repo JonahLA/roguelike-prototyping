@@ -1,18 +1,29 @@
 using UnityEngine;
 using System.Collections.Generic; // Required for List
 
+/// <summary>
+/// Handles the population of rooms with enemies and other content based on room templates and game difficulty.
+/// </summary>
 public class RoomContentPopulator : MonoBehaviour
 {
-    // Define how much the count can be scaled at maximum difficulty (1.0f)
-    // For example, 1.0f means the count can double. 0.5f means it can increase by 50%.
-    private const float MaxCountScaleFactor = 1.0f; 
+    /// <summary>
+    /// Defines the maximum scaling factor for enemy counts at the highest difficulty (1.0f).
+    /// For example, a value of 1.0f means the count can double, while 0.5f means it can increase by 50%.
+    /// </summary>
+    [Tooltip("Maximum scaling factor for enemy count at full difficulty. E.g., 1.0 means count can double.")]
+    [SerializeField] private float maxCountScaleFactor = 1.0f;
 
     /// <summary>
     /// Populates the given room with enemies based on its template and the current difficulty.
     /// </summary>
-    /// <param name="roomInstance">The GameObject of the instantiated room.</param>
-    /// <param name="roomTemplate">The RoomTemplate defining what content to spawn.</param>
-    /// <param name="difficulty">The current difficulty level (e.g., 0.0 to 1.0 or an integer scale).</param>
+    /// <param name="roomInstance">The GameObject of the instantiated room. This object will be the parent for spawned content.</param>
+    /// <param name="roomTemplate">The <see cref="RoomTemplate"/> defining what content to spawn and where.</param>
+    /// <param name="difficulty">The current difficulty level, typically ranging from 0.0 (easiest) to 1.0 (hardest). This influences enemy count and potentially other factors.</param>
+    /// <remarks>
+    /// Logs errors if <paramref name="roomInstance"/> or <paramref name="roomTemplate"/> is null.
+    /// Skips spawn points if their <c>enemyPrefab</c> is null.
+    /// Future enhancements could include tiered enemy selection and stat scaling based on difficulty.
+    /// </remarks>
     public void PopulateRoom(GameObject roomInstance, RoomTemplate roomTemplate, float difficulty)
     {
         if (roomTemplate == null)
@@ -41,7 +52,9 @@ public class RoomContentPopulator : MonoBehaviour
             }
 
             // --- Difficulty Influence on Count ---
-            float scaledCount = Mathf.Lerp(spawnPoint.count, spawnPoint.count * (1f + MaxCountScaleFactor), difficulty);
+            // Ensure difficulty is clamped between 0 and 1 to prevent unintended scaling issues.
+            float clampedDifficulty = Mathf.Clamp01(difficulty);
+            float scaledCount = Mathf.Lerp(spawnPoint.count, spawnPoint.count * (1f + maxCountScaleFactor), clampedDifficulty);
             
             int actualCount = 0;
             if (spawnPoint.count > 0)

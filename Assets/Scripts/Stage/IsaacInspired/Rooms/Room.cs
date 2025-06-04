@@ -2,34 +2,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps; // Added for Tilemap support
 
+/// <summary>
+/// Defines the different types of rooms that can exist in a stage.
+/// </summary>
 public enum RoomType
 {
+    /// <summary>The starting room where the player begins.</summary>
     Start,
+    /// <summary>A standard room, often containing enemies or puzzles.</summary>
     Normal,
+    /// <summary>A room containing a boss encounter.</summary>
     Boss,
+    /// <summary>A room containing treasure or items for the player.</summary>
     Treasure,
+    /// <summary>A room where the player can buy items.</summary>
     Shop,
     // Add more as needed (e.g., Secret, Challenge, etc.)
 }
 
+/// <summary>
+/// Abstract base class for all room types in the game.
+/// Provides common functionality and properties for rooms.
+/// </summary>
+/// <remarks>
+/// Each room is associated with a <see cref="RoomTemplate"/> and has a position on the grid.
+/// It manages its cleared status and references to its doors.
+/// It also expects a <see cref="RoomContext"/> component on the same GameObject to access tilemaps.
+/// </remarks>
 public abstract class Room : MonoBehaviour
 {
+    /// <summary>
+    /// The template defining the layout and potential contents of this room.
+    /// </summary>
+    [Tooltip("The RoomTemplate asset that defines this room's structure and content.")]
     public RoomTemplate template;
+
+    /// <summary>
+    /// The position of this room within the stage grid.
+    /// </summary>
+    [Tooltip("The grid coordinates of this room within the stage.")]
     public Vector2Int gridPosition;
+
+    /// <summary>
+    /// Indicates whether the room has been cleared (e.g., all enemies defeated, puzzle solved).
+    /// </summary>
+    [Tooltip("Is this room considered cleared (e.g., enemies defeated, puzzle solved)?")]
     public bool isCleared = false;
 
+    /// <summary>
+    /// A dictionary mapping door directions to their <see cref="DoorController"/> instances.
+    /// </summary>
+    [Tooltip("References to the door controllers for this room, indexed by direction.")]
     public Dictionary<Direction, DoorController> doors = new();
 
-    // This field will now be populated from RoomContext
+    /// <summary>
+    /// Reference to the Tilemap used for rendering walls in this room.
+    /// Populated from <see cref="RoomContext"/> during Awake.
+    /// </summary>
+    [Tooltip("Reference to the Walls Tilemap. Set via RoomContext.")]
     [HideInInspector] // Hide this from the Room component inspector as it's set via RoomContext
     public Tilemap WallsTilemap;
-    
+
     // Optional: If you also want to access the FloorsTilemap from RoomContext
+    // [Tooltip("Reference to the Floors Tilemap. Set via RoomContext.")]
     // [HideInInspector]
     // public Tilemap FloorsTilemap;
 
     private RoomContext _roomContext; // Reference to the RoomContext component
 
+    /// <summary>
+    /// Called when the script instance is being loaded.
+    /// </summary>
+    /// <remarks>
+    /// Initializes references to <see cref="RoomContext"/> and its associated tilemaps.
+    /// Logs errors if the <see cref="RoomContext"/> or required tilemaps are not found.
+    /// </remarks>
     protected virtual void Awake()
     {
         _roomContext = GetComponent<RoomContext>();
@@ -59,18 +106,41 @@ public abstract class Room : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when the player character enters this room.
+    /// </summary>
+    /// <remarks>
+    /// This is a virtual method that can be overridden by derived room types
+    /// to implement specific behaviors upon player entry (e.g., spawning enemies, locking doors).
+    /// The base implementation logs the entry event.
+    /// </remarks>
     public virtual void OnPlayerEnter()
     {
         // Base implementation, can be overridden by derived classes
         Debug.Log($"[Room] Player entered {gameObject.name} of type {template.roomType} at {gridPosition}");
     }
 
+    /// <summary>
+    /// Called when the player character exits this room.
+    /// </summary>
+    /// <remarks>
+    /// This is a virtual method that can be overridden by derived room types
+    /// to implement specific behaviors upon player exit.
+    /// The base implementation logs the exit event.
+    /// </remarks>
     public virtual void OnPlayerExit()
     {
         // Base implementation
         Debug.Log($"[Room] Player exited {gameObject.name}");
     }
 
+    /// <summary>
+    /// Called when the conditions for clearing the room have been met.
+    /// </summary>
+    /// <remarks>
+    /// This method sets <see cref="isCleared"/> to true and logs the event.
+    /// Derived classes can override this to add specific behaviors like unlocking doors.
+    /// </remarks>
     public virtual void OnRoomClear()
     {
         isCleared = true;
