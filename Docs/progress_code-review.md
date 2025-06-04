@@ -153,7 +153,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomCameraController.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomCameraController.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomCameraController.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -163,7 +163,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomContext.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomContext.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomContext.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -173,7 +173,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomTemplate.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomTemplate.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/Rooms/RoomTemplate.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -184,7 +184,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       Note: This is a ScriptableObject.
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/Rooms/ShopRoom.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/Rooms/ShopRoom.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/Rooms/ShopRoom.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -194,7 +194,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/Rooms/StartRoom.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/Rooms/StartRoom.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/Rooms/StartRoom.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -204,7 +204,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/Stage/IsaacInspired/Rooms/TreasureRoom.cs`
+- [X] `Assets/Scripts/Stage/IsaacInspired/Rooms/TreasureRoom.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/Stage/IsaacInspired/Rooms/TreasureRoom.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -214,7 +214,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/UI/Minimap/MinimapController.cs`
+- [X] `Assets/Scripts/UI/Minimap/MinimapController.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/UI/Minimap/MinimapController.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:

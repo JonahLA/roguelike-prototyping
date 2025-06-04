@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic; // Required for Dictionary or List
-using UnityEngine.InputSystem; // Required for InputAction
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Manages the minimap UI, including both the standard (3x3) view and the full map overlay.
@@ -12,55 +12,99 @@ public class MinimapController : MonoBehaviour
     [Header("UI Prefabs & References")]
     [Tooltip("The prefab for a single room UI element on the minimap.")]
     [SerializeField] private GameObject minimapRoomPrefab;
+    
     [Tooltip("The parent transform for all room UI elements in the full map view.")]
     [SerializeField] private Transform fullMapRoomsContainer;
+    
     [Tooltip("The Image component used to display the player's icon on the minimap.")]
     [SerializeField] private Image playerIcon;
+    
     [Tooltip("The Panel Image component for the standard minimap's background.")]
     [SerializeField] private Image standardMinimapBackground;
+    
     [Tooltip("Optional: The Image component for the border of the standard minimap.")]
     [SerializeField] private Image standardMinimapBorder;
+    
     [Tooltip("The parent GameObject that holds the 3x3 grid of rooms for the standard minimap view.")]
     [SerializeField] private GameObject standardMinimapContainer;
+    
     [Tooltip("The parent GameObject for the full map overlay, shown when the player toggles the map.")]
     [SerializeField] private GameObject fullMapOverlayContainer;
 
     [Header("Minimap Configuration")]
     [Tooltip("Default color for unexplored rooms in the full map view.")]
     [SerializeField] private Color defaultRoomColor = Color.gray;
+    
     [Tooltip("Color for rooms that have been explored by the player.")]
     [SerializeField] private Color exploredRoomColor = Color.white;
+    
     [Tooltip("Color for the room the player is currently in.")]
     [SerializeField] private Color currentRoomColor = Color.green;
+    
     [Tooltip("Background color for the standard minimap.")]
     [SerializeField] private Color minimapBackgroundColor = Color.black;
+    
     [Tooltip("Border color for the standard minimap.")]
     [SerializeField] private Color minimapBorderColor = Color.white;
+    
     [Tooltip("ScriptableObject asset that maps RoomType enums to their corresponding UI sprites.")]
     [SerializeField] private MinimapIconMapping iconMapping;
 
     [Header("Room Layout Settings")]
     [Tooltip("The size (width and height) of each individual room UI element on the minimap.")]
     [SerializeField] private Vector2 roomSize = new(30, 30);
+    
     [Tooltip("The spacing (horizontal and vertical) between room UI elements on the minimap.")]
     [SerializeField] private Vector2 roomSpacing = new(5, 5);
 
+    /// <summary>
+    /// Dictionary mapping grid coordinates to their corresponding minimap UI room representations.
+    /// </summary>
     private Dictionary<Vector2Int, MinimapUIRoom> minimapRooms = new();
-    private StageGrid currentStageGrid; // Changed type to StageGrid
-    private Vector2Int currentPlayerRoomCoordinates = Vector2Int.zero; // Example starting position
+    
+    /// <summary>
+    /// Reference to the current stage's grid data structure.
+    /// </summary>
+    private StageGrid currentStageGrid;
+    
+    /// <summary>
+    /// The grid coordinates of the room the player is currently in.
+    /// </summary>
+    private Vector2Int currentPlayerRoomCoordinates = Vector2Int.zero;
+    
+    /// <summary>
+    /// Whether the full map overlay is currently active/visible.
+    /// </summary>
     private bool isFullMapActive = false;
 
-    // For the 3x3 standard view
+    /// <summary>
+    /// Size of the standard minimap view (3x3 grid).
+    /// </summary>
     private const int StandardViewSize = 3;
+    
+    /// <summary>
+    /// Array representing the 3x3 standard minimap view room slots.
+    /// </summary>
     private MinimapUIRoom[,] standardViewRooms = new MinimapUIRoom[StandardViewSize, StandardViewSize];
+    
+    /// <summary>
+    /// Dictionary tracking all rooms that have been explored by the player.
+    /// </summary>
     private Dictionary<Vector2Int, Room> exploredRooms = new();
 
+    /// <summary>
+    /// Unity lifecycle method called before Start().
+    /// Initializes the standard view slots for the 3x3 minimap.
+    /// </summary>
     void Awake()
     {
-        // Ensure standard view slots are created before Start or any external calls via InitializeMinimap.
         InitializeStandardViewSlots();
     }
 
+    /// <summary>
+    /// Unity lifecycle method called at the start of the first frame.
+    /// Sets up initial minimap visual properties and container states.
+    /// </summary>
     void Start()
     {
         if (standardMinimapBackground != null)
@@ -453,6 +497,10 @@ public class MinimapController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unity lifecycle method called when the GameObject is destroyed.
+    /// Unsubscribes from events to prevent memory leaks and potential errors.
+    /// </summary>
     void OnDestroy()
     {
         // It's good practice to unsubscribe from events when the object is destroyed
