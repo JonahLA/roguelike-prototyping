@@ -224,7 +224,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/UI/Minimap/MinimapIconMapping.cs`
+- [X] `Assets/Scripts/UI/Minimap/MinimapIconMapping.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/UI/Minimap/MinimapIconMapping.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
@@ -234,7 +234,7 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [ ] `Assets/Scripts/UI/Minimap/MinimapUIRoom.cs`
+- [X] `Assets/Scripts/UI/Minimap/MinimapUIRoom.cs`
     - Prompt:
       ```
       Review the script `Assets/Scripts/UI/Minimap/MinimapUIRoom.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:

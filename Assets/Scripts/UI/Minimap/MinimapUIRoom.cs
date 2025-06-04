@@ -7,20 +7,41 @@ using UnityEngine.UI;
 /// special icon (e.g., for boss rooms, item rooms), and door indicators.
 /// </summary>
 public class MinimapUIRoom : MonoBehaviour
-{
-    [Header("UI References")]
+{    [Header("UI References")]
+    /// <summary>
+    /// The Image component for the room's main background.
+    /// </summary>
     [Tooltip("The Image component for the room's main background.")]
     [SerializeField] private Image roomBackground;
+
+    /// <summary>
+    /// The Image component used to display a special icon for this room (e.g., boss, item room).
+    /// </summary>
     [Tooltip("The Image component used to display a special icon for this room (e.g., boss, item room).")]
     [SerializeField] private Image specialRoomIcon;
 
     [Header("Door Indicators")]
+    /// <summary>
+    /// GameObject representing the door indicator for the top (North) side of the room.
+    /// </summary>
     [Tooltip("GameObject representing the door indicator for the top (North) side of the room.")]
     [SerializeField] private GameObject doorIndicatorUp;
+
+    /// <summary>
+    /// GameObject representing the door indicator for the bottom (South) side of the room.
+    /// </summary>
     [Tooltip("GameObject representing the door indicator for the bottom (South) side of the room.")]
     [SerializeField] private GameObject doorIndicatorDown;
+
+    /// <summary>
+    /// GameObject representing the door indicator for the left (West) side of the room.
+    /// </summary>
     [Tooltip("GameObject representing the door indicator for the left (West) side of the room.")]
     [SerializeField] private GameObject doorIndicatorLeft;
+
+    /// <summary>
+    /// GameObject representing the door indicator for the right (East) side of the room.
+    /// </summary>
     [Tooltip("GameObject representing the door indicator for the right (East) side of the room.")]
     [SerializeField] private GameObject doorIndicatorRight;
 

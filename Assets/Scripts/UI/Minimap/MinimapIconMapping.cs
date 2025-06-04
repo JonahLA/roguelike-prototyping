@@ -10,17 +10,29 @@ using System.Collections.Generic;
 [System.Serializable]
 public class RoomTypeIconPair
 {
+    /// <summary>
+    /// The type of room this icon represents.
+    /// </summary>
+    [Tooltip("The type of room this icon represents.")]
     public RoomType roomType;
+
+    /// <summary>
+    /// The sprite icon to display for this room type on the minimap.
+    /// </summary>
+    [Tooltip("The sprite icon to display for this room type on the minimap.")]
     public Sprite icon;
 }
 
 /// <summary>
 /// ScriptableObject to store mappings from RoomType to Sprite for minimap icons.
-/// Create instances of this via Assets > Create > Flare > Minimap Icon Mapping.
+/// Create instances of this via Assets > Create > Roguelike > Minimap Icon Mapping.
 /// </summary>
 [CreateAssetMenu(fileName = "MinimapIconMapping", menuName = "Roguelike/Minimap Icon Mapping", order = 1)]
 public class MinimapIconMapping : ScriptableObject
 {
+    /// <summary>
+    /// List of room types and their corresponding minimap icons.
+    /// </summary>
     [Tooltip("List of room types and their corresponding minimap icons.")]
     public List<RoomTypeIconPair> iconMappings;
 
