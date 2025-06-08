@@ -214,14 +214,15 @@ public class Health : MonoBehaviour, IDamageable
     /// Get remaining immunity time in seconds.
     /// </summary>
     public float RemainingImmunityTime => Mathf.Max(0f, _immunityDuration - (Time.time - _lastDamageTime));
-      private void HandleDeath()
+
+    private void HandleDeath()
     {
         _isDead = true;
-        
+
         // Broadcast death events
         OnDeath?.Invoke();
         Death?.Invoke(this);
-        
+
         // Notify HealthManager for centralized death events
         if (gameObject.CompareTag("Player"))
         {
@@ -231,7 +232,7 @@ public class Health : MonoBehaviour, IDamageable
         {
             HealthManager.NotifyEntityDeath(gameObject);
         }
-        
+
         // Note: We don't destroy the GameObject here to allow death animations, etc.
         // The death event subscribers should handle cleanup if needed.
     }
