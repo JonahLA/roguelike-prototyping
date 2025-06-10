@@ -38,11 +38,11 @@
 
 ## Next Steps
 
-### Step 2: Player Combat Foundation (Not Started)
-- [ ] Create `IPlayerAttack` interface and attack strategy architecture
-- [ ] Implement `SwordSwingAttack.cs` as the primary melee attack
-- [ ] Create `PlayerCombat.cs` for input handling and attack coordination
-- [ ] Integrate with existing PlayerController2D
+### Step 2: Player Combat Foundation (✅ Implemented)
+- [x] Create `IPlayerAttack` interface and attack strategy architecture
+- [x] Implement `SwordSwingAttack.cs` as the primary melee attack (`SwordSwingAttackSO.cs`)
+- [x] Create `PlayerCombat.cs` for input handling and attack coordination
+- [x] Integrate with existing PlayerController2D
 
 ### Step 3: Enemy AI and Behavior (Not Started)
 - [ ] Implement strategy interfaces (`ITargetingStrategy`, `IMovementStrategy`, `IAttackStrategy`)
