@@ -226,6 +226,9 @@ PURSUING (PursuePlayerDirectlyStrategy) → Player out of range → Return PASSI
 - **Damage Numbers**: Floating text with configurable styling
 - **Attack Visualization**: Clear attack ranges and timing
 
+## Technical Debt
+- Refactor `PlayerController2D.OnMove` to use `InputActionReference` instead of relying on `PlayerInput` component's UnityEvent/SendMessage behavior for consistency and better C# control.
+
 ## Implementation Steps
 
 1. **Core Health System**
