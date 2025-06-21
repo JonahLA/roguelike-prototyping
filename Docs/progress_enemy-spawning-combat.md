@@ -62,7 +62,7 @@
 - [x] **Phase 4: Integration**
   - [x] Connect AI to `Health` component for death handling
   - [x] Integrate attack strategy with player's `IDamageable` interface
-  - [ ] Create a basic "Grunt" enemy prefab with all components configured
+  - [X] Create a basic "Grunt" enemy prefab with all components configured
 
 ### Step 4: Room Integration and Polish (Not Started)
 - [ ] Enhance `NormalRoom` with enemy tracking via death events

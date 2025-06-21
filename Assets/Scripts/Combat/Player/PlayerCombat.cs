@@ -117,7 +117,7 @@ public class PlayerCombat : MonoBehaviour
         // BaseDamage is now retrieved from the AttackContext within the SO, or directly from SO if needed.
         // float baseDamage = _currentAttackSO.BaseDamage; 
 
-        AttackContext attackContext = new AttackContext(this, attackOrigin, attackDirection, _currentAttackSO.BaseDamage);
+        AttackContext attackContext = new(this, attackOrigin, attackDirection, _currentAttackSO.BaseDamage);
         _currentAttackSO.Attack(attackContext);
 
         // Debug.Log($"PlayerCombat: Attack performed with {_currentAttackSO.name} from {attackOrigin} in direction {attackDirection}.");

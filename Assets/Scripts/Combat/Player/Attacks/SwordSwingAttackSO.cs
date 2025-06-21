@@ -34,7 +34,7 @@ public class SwordSwingAttackSO : PlayerAttackSO
         // For OverlapBox, size is (width, height) before rotation.
         // We want the length of the box to be _attackRange (along attack direction) 
         // and its thickness to be _attackWidth (perpendicular to attack direction).
-        Vector2 effectiveBoxSize = new Vector2(_attackWidth, _attackRange);
+        Vector2 effectiveBoxSize = new(_attackWidth, _attackRange);
         
         // Calculate the angle of the attack direction relative to the world's up vector.
         // This is used to rotate the OverlapBox to align with the attack.
@@ -49,7 +49,7 @@ public class SwordSwingAttackSO : PlayerAttackSO
             // Prevent hitting self if player is on a hittable layer by mistake
             if (context.Instigator != null && hit.gameObject == context.Instigator.gameObject) continue;
 
-            if (hit.TryGetComponent<IDamageable>(out IDamageable damageable))
+            if (hit.TryGetComponent(out IDamageable damageable))
             {
                 damageable.TakeDamage(context.BaseDamage); // Use BaseDamage from context
                 Debug.Log($"SwordSwing: Hit {hit.name} for {context.BaseDamage} damage.");
