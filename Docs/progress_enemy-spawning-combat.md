@@ -51,10 +51,10 @@
   - [x] Create base `ScriptableObject` strategy interfaces (`TargetingStrategySO`, `MovementStrategySO`, `AttackStrategySO`)
   - [x] Create `Enemy.cs` MonoBehaviour
 - [ ] **Phase 2: Concrete Strategies**
-  - [ ] Implement `WanderTargetingStrategy`
-  - [ ] Implement `PursuePlayerTargetingStrategy`
-  - [ ] Implement `WalkMovementStrategy`
-  - [ ] Implement `MeleeAttackStrategy`
+  - [x] Implement `WanderTargetingStrategy`
+  - [x] Implement `PursuePlayerTargetingStrategy`
+  - [x] Implement `WalkMovementStrategy`
+  - [x] Implement `MeleeAttackStrategy`
 - [ ] **Phase 3: AI Coordinator**
   - [ ] Implement `EnemyAI.cs` to manage states and execute strategies
   - [ ] Add player detection logic (line-of-sight, range)
