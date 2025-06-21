@@ -1,25 +1,40 @@
 using UnityEngine;
 
+/// <summary>
+/// The core component for an enemy GameObject. It holds references to the enemy's
+/// stats and its health component, acting as a central point for enemy data.
+/// </summary>
 [RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour
 {
+    [Tooltip("The ScriptableObject containing the stats for this enemy.")]
     [SerializeField]
     private EnemyStatsSO _stats;
+
+    /// <summary>
+    /// The stats configuration for this enemy.
+    /// </summary>
     public EnemyStatsSO Stats => _stats;
 
-    private Health _health;
-    public Health Health => _health;
+    /// <summary>
+    /// A reference to the Health component attached to this enemy.
+    /// </summary>
+    public Health Health { get; private set; }
 
     private void Awake()
     {
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
     }
 
     private void Start()
     {
         if (_stats != null)
         {
-            _health.SetMaxHealth(_stats.maxHealth);
+            Health.SetMaxHealth(_stats.maxHealth);
+        }
+        else
+        {
+            Debug.LogError("Enemy stats are not assigned!", this);
         }
     }
 }
