@@ -24,3 +24,4 @@ Project Instructions
 
 Additional Notes
 This project is in the prototyping phase focusing on mechanics and implementations. Feel free to ask questions if you need more information or have suggestions for further improvements.
+Note that for this project, we are not wrapping classes in namespaces - - don't do that with your code.

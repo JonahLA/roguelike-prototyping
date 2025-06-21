@@ -44,11 +44,25 @@
 - [x] Create `PlayerCombat.cs` for input handling and attack coordination
 - [x] Integrate with existing PlayerController2D
 
-### Step 3: Enemy AI and Behavior (Not Started)
-- [ ] Implement strategy interfaces (`ITargetingStrategy`, `IMovementStrategy`, `IAttackStrategy`)
-- [ ] Create basic concrete strategies (wander, pursue, walk, melee)
-- [ ] Implement `EnemyAI.cs` state coordinator with strategy composition
-- [ ] Add player detection and damage dealing
+### Step 3: Enemy AI and Behavior (In Progress)
+- [ ] **Phase 1: Core Structures**
+  - [x] Create `EnemyAIState` enum
+  - [x] Create `EnemyStatsSO` ScriptableObject
+  - [x] Create base `ScriptableObject` strategy interfaces (`TargetingStrategySO`, `MovementStrategySO`, `AttackStrategySO`)
+  - [x] Create `Enemy.cs` MonoBehaviour
+- [ ] **Phase 2: Concrete Strategies**
+  - [ ] Implement `WanderTargetingStrategy`
+  - [ ] Implement `PursuePlayerTargetingStrategy`
+  - [ ] Implement `WalkMovementStrategy`
+  - [ ] Implement `MeleeAttackStrategy`
+- [ ] **Phase 3: AI Coordinator**
+  - [ ] Implement `EnemyAI.cs` to manage states and execute strategies
+  - [ ] Add player detection logic (line-of-sight, range)
+  - [ ] Implement state transition logic (Passive <-> Pursuing <-> Attacking)
+- [ ] **Phase 4: Integration**
+  - [ ] Connect AI to `Health` component for death handling
+  - [ ] Integrate attack strategy with player's `IDamageable` interface
+  - [ ] Create a basic "Grunt" enemy prefab with all components configured
 
 ### Step 4: Room Integration and Polish (Not Started)
 - [ ] Enhance `NormalRoom` with enemy tracking via death events
