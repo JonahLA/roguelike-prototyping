@@ -25,6 +25,17 @@ public class EnemyAI : MonoBehaviour
     {
         _enemy = GetComponent<Enemy>();
         _rb = GetComponent<Rigidbody2D>();
+
+        // Subscribe to the death event
+        Health health = _enemy.Health;
+        health?.OnDeath.AddListener(HandleDeath);
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe to prevent memory leaks
+        Health health = _enemy.Health;
+        health?.OnDeath.RemoveListener(HandleDeath);
     }
 
     private void Start()
@@ -104,7 +115,7 @@ public class EnemyAI : MonoBehaviour
 
             case EnemyAIState.Attacking:
                 // Stop moving
-                _rb.velocity = Vector2.zero;
+                _rb.linearVelocity = Vector2.zero;
 
                 // Attack on cooldown
                 if (_timeSinceLastAttack >= _enemy.Stats.attackCooldown)
@@ -122,5 +133,12 @@ public class EnemyAI : MonoBehaviour
 
         _currentState = newState;
         _timeInCurrentWanderTarget = _wanderTargetDwellTime; // Force new wander target when entering passive state
+    }
+
+    private void HandleDeath()
+    {
+        // Disable AI and collider on death
+        this.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
     }
 }

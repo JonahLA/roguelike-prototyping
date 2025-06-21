@@ -44,24 +44,24 @@
 - [x] Create `PlayerCombat.cs` for input handling and attack coordination
 - [x] Integrate with existing PlayerController2D
 
-### Step 3: Enemy AI and Behavior (In Progress)
-- [ ] **Phase 1: Core Structures**
+### Step 3: Enemy AI and Behavior (✅)
+- [x] **Phase 1: Core Structures**
   - [x] Create `EnemyAIState` enum
   - [x] Create `EnemyStatsSO` ScriptableObject
   - [x] Create base `ScriptableObject` strategy interfaces (`TargetingStrategySO`, `MovementStrategySO`, `AttackStrategySO`)
   - [x] Create `Enemy.cs` MonoBehaviour
-- [ ] **Phase 2: Concrete Strategies**
+- [x] **Phase 2: Concrete Strategies**
   - [x] Implement `WanderTargetingStrategy`
   - [x] Implement `PursuePlayerTargetingStrategy`
   - [x] Implement `WalkMovementStrategy`
   - [x] Implement `MeleeAttackStrategy`
-- [ ] **Phase 3: AI Coordinator**
+- [x] **Phase 3: AI Coordinator**
   - [x] Implement `EnemyAI.cs` to manage states and execute strategies
   - [x] Add player detection logic (line-of-sight, range)
   - [x] Implement state transition logic (Passive <-> Pursuing <-> Attacking)
-- [ ] **Phase 4: Integration**
-  - [ ] Connect AI to `Health` component for death handling
-  - [ ] Integrate attack strategy with player's `IDamageable` interface
+- [x] **Phase 4: Integration**
+  - [x] Connect AI to `Health` component for death handling
+  - [x] Integrate attack strategy with player's `IDamageable` interface
   - [ ] Create a basic "Grunt" enemy prefab with all components configured
 
 ### Step 4: Room Integration and Polish (Not Started)
