@@ -56,9 +56,9 @@
   - [x] Implement `WalkMovementStrategy`
   - [x] Implement `MeleeAttackStrategy`
 - [ ] **Phase 3: AI Coordinator**
-  - [ ] Implement `EnemyAI.cs` to manage states and execute strategies
-  - [ ] Add player detection logic (line-of-sight, range)
-  - [ ] Implement state transition logic (Passive <-> Pursuing <-> Attacking)
+  - [x] Implement `EnemyAI.cs` to manage states and execute strategies
+  - [x] Add player detection logic (line-of-sight, range)
+  - [x] Implement state transition logic (Passive <-> Pursuing <-> Attacking)
 - [ ] **Phase 4: Integration**
   - [ ] Connect AI to `Health` component for death handling
   - [ ] Integrate attack strategy with player's `IDamageable` interface
