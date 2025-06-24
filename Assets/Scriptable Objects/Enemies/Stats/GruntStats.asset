@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f85154aabde0c468a5572ac1e39277, type: 3}
   m_Name: GruntStats
   m_EditorClassIdentifier: 
-  moveSpeed: 3.5
+  moveSpeed: 2
   wanderRadius: 5
   detectionRange: 10
   attackRange: 1.5

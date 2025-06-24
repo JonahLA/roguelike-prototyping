@@ -98,7 +98,9 @@ public class Health : MonoBehaviour, IDamageable
         // Apply damage
         float previousHealth = _currentHealth;
         _currentHealth = Mathf.Max(0f, _currentHealth - damage);
-        _lastDamageTime = Time.time;        // Broadcast damage taken event
+        _lastDamageTime = Time.time;
+
+        // Broadcast damage taken event
         OnDamageTaken?.Invoke(damage, source);
         DamageTaken?.Invoke(damage, source);
         

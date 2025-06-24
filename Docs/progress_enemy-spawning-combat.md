@@ -63,6 +63,7 @@
   - [x] Connect AI to `Health` component for death handling
   - [x] Integrate attack strategy with player's `IDamageable` interface
   - [X] Create a basic "Grunt" enemy prefab with all components configured
+  - [X] Fix issue with not being able to hit "Grunt" with an attack
 
 ### Step 4: Room Integration and Polish (Not Started)
 - [ ] Enhance `NormalRoom` with enemy tracking via death events

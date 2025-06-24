@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4583748140308510180}
   - component: {fileID: 4379983647290184150}
   - component: {fileID: 1221521950013517138}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grunt
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7209574209053684517}
   - component: {fileID: 8074005525766208239}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

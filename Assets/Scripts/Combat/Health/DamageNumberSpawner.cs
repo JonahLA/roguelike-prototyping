@@ -31,8 +31,8 @@ public class DamageNumberSpawner : MonoBehaviour
     private float _spawnPositionVariance = 0.2f;
     
     // Pool management
-    private Queue<DamageNumber> _availableNumbers = new Queue<DamageNumber>();
-    private HashSet<DamageNumber> _activeNumbers = new HashSet<DamageNumber>();
+    private Queue<DamageNumber> _availableNumbers = new();
+    private HashSet<DamageNumber> _activeNumbers = new();
     
     // Singleton pattern for easy access
     public static DamageNumberSpawner Instance { get; private set; }
