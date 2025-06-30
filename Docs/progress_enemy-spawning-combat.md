@@ -65,11 +65,50 @@
   - [X] Create a basic "Grunt" enemy prefab with all components configured
   - [X] Fix issue with not being able to hit "Grunt" with an attack
 
-### Step 4: Room Integration and Polish (Not Started)
-- [ ] Enhance `NormalRoom` with enemy tracking via death events
-- [ ] Implement door locking/unlocking mechanics
-- [ ] Add particle effects for enemy death
-- [ ] Create basic enemy prefabs with strategy configurations
+### Step 4: Room Integration and Polish (🔄 In Progress)
+
+**Current Analysis:**
+- ✅ Health system provides centralized death events via `HealthManager`
+- ✅ Enemy AI system is complete with death handling
+- ✅ Room system exists with `NormalRoom`, `DoorController`, and templates
+- ✅ `RoomContentPopulator` exists for enemy spawning functionality
+- ✅ Enemy spawn points defined in `RoomTemplate` system
+
+**Implementation Plan:**
+
+**Phase 1: Core Room Integration**
+- [X] Enhance `NormalRoom` to subscribe to enemy death events from `HealthManager.EntityDeath`
+- [X] Implement enemy tracking system to monitor spawned enemies
+- [X] Add door locking/unlocking mechanics using existing `DoorController.Lock()/Unlock()` methods
+- [X] Connect `NormalRoom` with `RoomContentPopulator` for enemy spawning
+
+**Phase 2: Enemy Spawning Logic**
+- [X] Spawn enemies on first room entry if room not cleared
+- [X] Track spawned enemies for room clear detection
+- [X] Handle room clear condition and door unlocking
+- [X] Integrate with existing `isCleared` flag system
+
+**Phase 3: Visual Polish**
+- [ ] Create basic enemy death particle effects system
+- [ ] Integrate particle effects with enemy death events
+- [ ] Add visual feedback for room clearing
+
+**Phase 4: Testing & Polish**
+- [ ] Test room clearing mechanics with existing enemy prefabs
+- [ ] Verify door locking/unlocking works correctly
+- [ ] Performance testing with multiple enemies
+
+**Clarifying Questions & Decisions:**
+1.  **Enemy Spawning Timing**: Spawn on room creation or first player entry?
+    - **Decision**: Enemies will spawn on the player's first entry into a room.
+2.  **Room State Persistence**: Should cleared rooms stay cleared when revisited?
+    - **Decision**: Yes, cleared rooms will remain cleared.
+3.  **Difficulty Integration**: Use existing difficulty system or default values?
+    - **Decision**: We will implement a player-driven **Risk/Reward System** for difficulty. Room challenge will be determined by the hand-crafted enemy compositions in `RoomTemplate` assets, not a scaling difficulty parameter.
+4.  **Particle Effects Scope**: Generic system or enemy-type-specific effects?
+    - **Decision**: A generic, robust particle system will be implemented for enemy deaths and potentially other future effects.
+5.  **Door Locking Behavior**: Lock all doors or only exit doors when enemies present?
+    - **Decision**: All doors will lock when enemies are present.
 
 ### Step 5: Visual Polish (Not Started)
 - [ ] Add particle effects for enemy death

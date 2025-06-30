@@ -5,6 +5,7 @@ This document outlines a focused plan to build and test the core mechanics of **
 2. Enemy spawning and basic combat
 3. Card system and card-based attacks
 4. Card acquisition, upgrades, and shop overlay
+5. Risk/Reward difficulty system
 
 Each vertical slice follows the cycle: **design → code → playtest**.
 
@@ -158,6 +159,24 @@ Each vertical slice follows the cycle: **design → code → playtest**.
 - Placeholder UI panel for shop overlay
 
 **Playtest**: Run multiple stages, open shop overlay, add/upgrade cards, and confirm deck updates.
+
+---
+
+## 5. Difficulty Scaling: Risk/Reward System
+
+**Goal**: Empower the player to optionally increase challenge in exchange for greater rewards, creating a dynamic difficulty curve based on their choices.
+
+- **Cursed Chests & Altars**:
+  - Introduce interactable objects that offer powerful loot (e.g., rare cards, permanent stat boosts).
+  - Activating them applies a "curse" or challenge, such as making all enemies on the floor stronger or spawning an elite enemy immediately.
+- **Branching Paths**:
+  - At the end of a floor, present the player with a choice of two or more doors leading to the next floor.
+  - Paths can be labeled with their inherent risk and reward (e.g., "The Perilous Crypt: More enemies, guaranteed rare card" vs. "The Quiet Catacombs: Standard difficulty").
+- **Challenge Rooms**:
+  - Design optional rooms that are clearly marked as high-difficulty.
+  - Completing the challenge (e.g., defeating waves of enemies, surviving for a set time) unlocks high-tier rewards.
+
+**Playtest**: Verify that players can opt into challenges, that the difficulty increases as described, and that the rewards are correctly granted.
 
 ---
 

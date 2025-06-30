@@ -32,6 +32,10 @@ public class Health : MonoBehaviour, IDamageable
     
     [Tooltip("Triggered when this entity dies")]
     public UnityEvent OnDeath;
+
+    [Header("Visual Effects")]
+    [Tooltip("Particle system prefab to instantiate upon death.")]
+    [SerializeField] private GameObject _deathParticlesPrefab;
     
     // Private fields
     private float _currentHealth;
@@ -219,9 +223,18 @@ public class Health : MonoBehaviour, IDamageable
 
     private void HandleDeath()
     {
+        if (_isDead) return;
+        
         _isDead = true;
+        
+        // Instantiate death particles if a prefab is assigned
+        if (_deathParticlesPrefab != null)
+        {   
+            // Spawn at the entity's position and rotation
+            Instantiate(_deathParticlesPrefab, transform.position, transform.rotation);
+        }
 
-        // Broadcast death events
+        // Broadcast death event to other systems
         OnDeath?.Invoke();
         Death?.Invoke(this);
 
