@@ -227,11 +227,11 @@ public class Health : MonoBehaviour, IDamageable
         
         _isDead = true;
         
-        // Instantiate death particles if a prefab is assigned
+        // Use the VFXSpawner to create death particles from a pool
         if (_deathParticlesPrefab != null)
         {   
             // Spawn at the entity's position and rotation
-            Instantiate(_deathParticlesPrefab, transform.position, transform.rotation);
+            VFXSpawner.Instance.SpawnVFX(_deathParticlesPrefab, transform.position, transform.rotation);
         }
 
         // Broadcast death event to other systems
