@@ -17,11 +17,9 @@ public class NormalRoom : Room
     [Tooltip("Reference to the content populator utility.")]
     [SerializeField] private RoomContentPopulator _roomContentPopulator;
 
-    private bool _playerHasEntered = false;
-
     protected override void Awake()
     {
-        base.Awake(); // Call the base class Awake method
+        base.Awake();
 
         // Fallback to find the populator if not assigned in the inspector
         if (_roomContentPopulator == null)
@@ -42,14 +40,8 @@ public class NormalRoom : Room
     {
         base.OnPlayerEnter();
 
-        if (isCleared || _playerHasEntered)
-        {
-            return;
-        }
+        if (isCleared) return;
 
-        _playerHasEntered = true;
-
-        // Access the 'template' field from the base Room class
         if (template != null && template.enemySpawnPoints.Any())
         {
             SpawnEnemiesAndSecureRoom();
@@ -63,7 +55,6 @@ public class NormalRoom : Room
 
     private void SpawnEnemiesAndSecureRoom()
     {
-        // Access the 'template' field from the base Room class
         var spawned = _roomContentPopulator.PopulateRoom(gameObject, template);
         _spawnedEnemies.AddRange(spawned);
 
@@ -71,7 +62,7 @@ public class NormalRoom : Room
         {
             Debug.Log($"NormalRoom {gameObject.name}: Player entered. Spawning {_spawnedEnemies.Count} enemies and locking doors.");
             HealthManager.EntityDeath += HandleEnemyDeath;
-            LockDoors();
+            CloseDoors();
         }
         else
         {
@@ -103,28 +94,9 @@ public class NormalRoom : Room
     /// </summary>
     public override void OnRoomClear()
     {
-        if (isCleared) return; // Prevent multiple clears
-
+        if (isCleared) return;
         base.OnRoomClear();
         HealthManager.EntityDeath -= HandleEnemyDeath;
-        UnlockDoors();
-        Debug.Log($"NormalRoom {gameObject.name}: Room cleared. Doors unlocked.");
-    }
-
-    private void LockDoors()
-    {
-        foreach (var door in doors.Values)
-        {
-            if (door != null) door.Lock();
-        }
-    }
-
-    private void UnlockDoors()
-    {
-        foreach (var door in doors.Values)
-        {
-            if (door != null) door.Unlock();
-        }
     }
 
     private void OnDestroy()

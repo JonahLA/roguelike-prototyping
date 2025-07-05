@@ -173,7 +173,7 @@ public class IsaacStageManager : MonoBehaviour
         if (door.isConnected && _playerTransform != null)
         {
             Room previousRoom = _currentRoom;
-            Room targetRoom = door.connectedRoom;
+            Room targetRoom = door.ConnectedRoom;
             
             if (targetRoom != null)
             {

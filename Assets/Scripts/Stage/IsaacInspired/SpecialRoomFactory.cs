@@ -308,7 +308,7 @@ public class SpecialRoomFactory
             Debug.LogError($"[RoomFactory] Error connecting doors between {room.gridPosition} and {adjacentPos}: {e.Message}\\n{e.StackTrace}");
             // Potentially set both doors to Wall state here if connection fails mid-way, though ConnectTo should handle its own state.
             // doorInCurrentRoom.SetState(DoorState.Wall);
-            // if(doorInAdjacentRoom != null) doorInAdjacentRoom.SetState(DoorState.Wall); // If it exists
+            // if (doorInAdjacentRoom != null) doorInAdjacentRoom.SetState(DoorState.Wall); // If it exists
             return false;
         }
     }

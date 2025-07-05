@@ -63,12 +63,7 @@ public abstract class Room : MonoBehaviour
     [HideInInspector] // Hide this from the Room component inspector as it's set via RoomContext
     public Tilemap WallsTilemap;
 
-    // Optional: If you also want to access the FloorsTilemap from RoomContext
-    // [Tooltip("Reference to the Floors Tilemap. Set via RoomContext.")]
-    // [HideInInspector]
-    // public Tilemap FloorsTilemap;
-
-    private RoomContext _roomContext; // Reference to the RoomContext component
+    private RoomContext _roomContext;
 
     /// <summary>
     /// Called when the script instance is being loaded.
@@ -84,19 +79,12 @@ public abstract class Room : MonoBehaviour
         if (_roomContext != null)
         {
             WallsTilemap = _roomContext.WallsTilemap;
-            // If you added FloorsTilemap to RoomContext and want to use it:
-            // FloorsTilemap = _roomContext.FloorsTilemap;
 
             if (WallsTilemap == null)
             {
                 Debug.LogError($"[Room] '{gameObject.name}': The WallsTilemap is not assigned in the RoomContext component. " +
                                "Please assign it on the Room prefab.", this);
             }
-            // Optional: Check for FloorsTilemap
-            // if (FloorsTilemap == null && _roomContext.FloorsTilemap != null) // Only error if it was expected
-            // {
-            //     Debug.LogWarning($"[Room] '{gameObject.name}': The FloorsTilemap is not assigned in the RoomContext component.", this);
-            // }
         }
         else
         {
@@ -116,7 +104,6 @@ public abstract class Room : MonoBehaviour
     /// </remarks>
     public virtual void OnPlayerEnter()
     {
-        // Base implementation, can be overridden by derived classes
         Debug.Log($"[Room] Player entered {gameObject.name} of type {template.roomType} at {gridPosition}");
     }
 
@@ -130,7 +117,6 @@ public abstract class Room : MonoBehaviour
     /// </remarks>
     public virtual void OnPlayerExit()
     {
-        // Base implementation
         Debug.Log($"[Room] Player exited {gameObject.name}");
     }
 
@@ -143,15 +129,45 @@ public abstract class Room : MonoBehaviour
     /// </remarks>
     public virtual void OnRoomClear()
     {
+        if (isCleared) return;
         isCleared = true;
-        // UnlockDoors(); // Assuming an UnlockDoors method exists
+        OpenDoors();
         Debug.Log($"[Room] {gameObject.name} cleared!");
-        // Potentially notify a game manager or trigger other events
     }
 
-    // Common methods like LockDoors/UnlockDoors could be here if all rooms share the exact same logic,
-    // or be abstract/virtual if they differ but should be implemented.
-    // For now, specific rooms handle their own locking if needed.
-}
+    protected virtual void CloseDoors()
+    {
+        Debug.Log($"[Room] Closing doors in {gameObject.name}.");
+        foreach (var door in doors.Values)
+        {
+            door.Close();
+        }
+    }
 
-// Derived class definitions (StartRoom, NormalRoom, BossRoom, TreasureRoom, ShopRoom) have been moved to their own files.
+    protected virtual void OpenDoors()
+    {
+        Debug.Log($"[Room] Opening doors in {gameObject.name}.");
+        foreach (var door in doors.Values)
+        {
+            door.Open();
+        }
+    }
+
+    protected virtual void LockDoors()
+    {
+        Debug.Log($"[Room] Locking doors in {gameObject.name}.");
+        foreach (var door in doors.Values)
+        {
+            door.Lock();
+        }
+    }
+
+    protected virtual void UnlockDoors()
+    {
+        Debug.Log($"[Room] Unlocking doors in {gameObject.name}.");
+        foreach (var door in doors.Values)
+        {
+            door.Unlock();
+        }
+    }
+}
