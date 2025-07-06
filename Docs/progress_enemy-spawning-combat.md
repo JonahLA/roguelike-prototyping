@@ -89,8 +89,8 @@
 - [X] Integrate with existing `isCleared` flag system
 
 **Phase 3: Visual Polish**
-- [ ] Create basic enemy death particle effects system
-- [ ] Integrate particle effects with enemy death events
+- [X] Create basic enemy death particle effects system
+- [X] Integrate particle effects with enemy death events
 - [ ] Add visual feedback for room clearing
 
 **Phase 4: Testing & Polish**

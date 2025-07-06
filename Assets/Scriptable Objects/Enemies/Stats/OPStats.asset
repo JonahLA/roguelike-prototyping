@@ -17,5 +17,5 @@ MonoBehaviour:
   detectionRange: 10
   attackRange: 1.5
   attackCooldown: 2
-  attackDamage: 1
-  maxHealth: 3
+  attackDamage: 999
+  maxHealth: 999

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerDefaultSwipeAttack
   m_EditorClassIdentifier: 
   _cooldownTime: 1
-  _baseDamage: 10
+  _baseDamage: 5
   _attackRange: 1.5
   _attackWidth: 1
   _hittableLayers:

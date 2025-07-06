@@ -24,7 +24,7 @@ MonoBehaviour:
   enemySpawnPoints:
   - localPosition: {x: 0, y: 0}
     enemyPrefab: {fileID: 83804837830833899, guid: 22b96dfadcada69459412f6fc2057df9, type: 3}
-    count: 10
+    count: 5
     spawnRadius: 5
   difficultyRating: 1
   minStageToAppear: 1

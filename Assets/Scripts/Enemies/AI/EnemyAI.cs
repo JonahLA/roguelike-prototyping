@@ -40,20 +40,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        // Cache component references
         _enemy = GetComponent<Enemy>();
         _rb = GetComponent<Rigidbody2D>();
-
-        // Subscribe to the death event
-        Health health = _enemy.Health;
-        if (health != null) health.OnDeath.AddListener(HandleDeath);
-    }
-
-    private void OnDestroy()
-    {
-        // Unsubscribe to prevent memory leaks
-        Health health = _enemy.Health;
-        if (health != null) health.OnDeath.RemoveListener(HandleDeath);
     }
 
     private void Start()
@@ -206,16 +194,5 @@ public class EnemyAI : MonoBehaviour
         {
             _timeInCurrentWanderTarget = _wanderTargetDwellTime;
         }
-    }
-
-    /// <summary>
-    /// Handles the enemy's death by disabling its AI and collider.
-    /// </summary>
-    private void HandleDeath()
-    {
-        // Disable AI and collider on death to stop movement and interaction.
-        // The GameObject is not destroyed here to allow for death animations or effects.
-        enabled = false;
-        GetComponent<Collider2D>().enabled = false;
     }
 }

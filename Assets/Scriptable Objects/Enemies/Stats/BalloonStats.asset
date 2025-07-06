@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f85154aabde0c468a5572ac1e39277, type: 3}
   m_Name: BalloonStats
   m_EditorClassIdentifier: 
-  moveSpeed: 3.5
-  wanderRadius: 5
-  detectionRange: 10
-  attackRange: 1.5
-  attackCooldown: 2
-  attackDamage: 1
-  maxHealth: 3
+  moveSpeed: 0
+  wanderRadius: 0
+  detectionRange: 0
+  attackRange: 0
+  attackCooldown: 0
+  attackDamage: 0
+  maxHealth: 1
