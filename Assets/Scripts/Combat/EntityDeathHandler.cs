@@ -61,7 +61,7 @@ public class EntityDeathHandler : MonoBehaviour
 
     private void Awake()
     {
-        _health ??= GetComponent<Health>();
+        _health = _health != null ? _health : GetComponent<Health>();
     }
 
     private void OnEnable()
