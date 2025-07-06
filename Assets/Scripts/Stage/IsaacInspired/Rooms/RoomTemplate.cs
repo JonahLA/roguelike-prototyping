@@ -5,7 +5,7 @@ using UnityEngine;
 /// Defines the template for a room, including its layout, content, and properties.
 /// Used as a ScriptableObject to create various room configurations.
 /// </summary>
-[CreateAssetMenu(fileName = "NewRoomTemplate", menuName = "Roguelike/Room Template")]
+[CreateAssetMenu(fileName = "NewRoomTemplate", menuName = "Flare/Room Template")]
 public class RoomTemplate : ScriptableObject
 {
     [Header("Room Information")]

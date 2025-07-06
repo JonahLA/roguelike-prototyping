@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Roguelike/Stage Definition", fileName = "NewStageDefinition")]
+[CreateAssetMenu(menuName = "Flare/Stage Definition", fileName = "NewStageDefinition")]
 public class StageDefinition : ScriptableObject
 {
     [Tooltip("List of room prefabs used for stage generation.")]

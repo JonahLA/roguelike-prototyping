@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A <see cref="PlayerAttackSO"/> that executes a melee sword swing using Physics2D.OverlapBoxAll.
 /// </summary>
-[CreateAssetMenu(fileName = "NewSwordSwingAttack", menuName = "Roguelike/Player Attacks/Sword Swing Attack")]
+[CreateAssetMenu(fileName = "NewSwordSwingAttack", menuName = "Flare/Player Attacks/Sword Swing Attack")]
 public class SwordSwingAttackSO : PlayerAttackSO
 {
     [Header("Sword Swing Specifics")]
