@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cooldownTime: 1
   _baseDamage: 5
+  attackEffectPrefab: {fileID: 6727704339038479923, guid: 0de2bddb8d1c4cf4a8ae8f7a15c9e867, type: 3}
   _attackRange: 1.5
   _attackWidth: 1
   _hittableLayers:
