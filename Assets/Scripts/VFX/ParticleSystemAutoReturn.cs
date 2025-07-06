@@ -12,10 +12,13 @@ public class ParticleSystemAutoReturn : MonoBehaviour
 {
     /// <summary>
     /// This method is automatically called by Unity when the ParticleSystem finishes.
-    /// It deactivates the GameObject, making it available again in the object pool.
+    /// It returns the object to the VFX pool.
     /// </summary>
     private void OnParticleSystemStopped()
     {
-        gameObject.SetActive(false);
+        if (VFXSpawner.Instance != null)
+            VFXSpawner.Instance.ReturnVFX(gameObject);
+        else
+            gameObject.SetActive(false);
     }
 }

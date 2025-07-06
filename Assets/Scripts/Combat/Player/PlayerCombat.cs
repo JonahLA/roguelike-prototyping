@@ -14,9 +14,14 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField]
     private PlayerAttackSO _currentAttackSO;
 
+    [Header("Attack Origin")]
     [Tooltip("Transform defining the origin point of attacks. If null, this GameObject's position is used.")]
     [SerializeField]
     private Transform _attackOriginPoint;
+
+    [Tooltip("How far from the player (in units) the attack should originate, in the facing direction.")]
+    [SerializeField, Min(0f)]
+    private float _attackOriginDistance = 0.5f;
 
     [Header("Input Actions")]
     [Tooltip("Reference to the Input Action used for triggering attacks.")]
@@ -66,7 +71,7 @@ public class PlayerCombat : MonoBehaviour
         if (_attackActionReference != null && _attackActionReference.action != null)
         {
             _attackActionReference.action.performed -= OnAttackPerformed;
-            _attackActionReference.action.Disable(); 
+            _attackActionReference.action.Disable();
         }
     }
 
@@ -87,7 +92,8 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
-        if (_playerMovementController == null) {
+        if (_playerMovementController == null)
+        {
             Debug.LogError("[PlayerCombat] PlayerMovementController not found. Cannot attack.", this);
             return;
         }
@@ -104,11 +110,22 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
-        Vector2 attackOrigin = _attackOriginPoint != null ? (Vector2)_attackOriginPoint.position : (Vector2)transform.position;
+        Vector2 attackOrigin = GetAttackOrigin();
         Vector2 attackDirection = _playerMovementController.FacingDirection;
 
-        float baseDamage = _currentAttackSO.BaseDamage; 
-        AttackContext attackContext = new(this, attackOrigin, attackDirection, baseDamage);
+        float baseDamage = _currentAttackSO.BaseDamage;
+        AttackContext attackContext = new(this, true, attackOrigin, attackDirection, baseDamage);
         _currentAttackSO.Attack(attackContext);
+    }
+    
+    /// <summary>
+    /// Computes the attack origin based on the player's position, facing direction, and attack origin distance.
+    /// </summary>
+    private Vector2 GetAttackOrigin()
+    {
+        Vector2 basePosition = _attackOriginPoint != null ? (Vector2)_attackOriginPoint.position : (Vector2)transform.position;
+        Vector2 facing = _playerMovementController != null ? _playerMovementController.FacingDirection : Vector2.down;
+        if (facing == Vector2.zero) facing = Vector2.down;  // default to down if not moving
+        return basePosition + facing.normalized * _attackOriginDistance;
     }
 }

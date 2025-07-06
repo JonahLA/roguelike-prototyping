@@ -17,6 +17,11 @@ public abstract class PlayerAttackSO : ScriptableObject, IPlayerAttack
 
     private float _currentCooldown;
 
+    [Header("Attack Effect Visualization")]
+    [Tooltip("Prefab for the attack effect visualization (e.g., slash, burst, projectile trail). Optional.")]
+    [SerializeField]
+    protected GameObject attackEffectPrefab;
+
     /// <summary>
     /// Gets the total time in seconds this attack takes to cool down.
     /// </summary>
@@ -60,8 +65,25 @@ public abstract class PlayerAttackSO : ScriptableObject, IPlayerAttack
     {
         if (!CanAttack()) return;
 
+        SpawnAttackEffect(context);
         ExecuteAttackLogic(context);
         _currentCooldown = _cooldownTime;
+    }
+
+    /// <summary>
+    /// Spawns the attack effect visualization if a prefab is assigned.
+    /// </summary>
+    /// <param name="context">The context of the attack.</param>
+    protected virtual void SpawnAttackEffect(AttackContext context)
+    {
+        if (attackEffectPrefab == null) return;
+
+        // Calculate rotation from direction (default: right is 0 degrees)
+        Vector2 dir = context.AttackDirection;
+        if (dir == Vector2.zero) dir = Vector2.right;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+        VFXSpawner.Instance.SpawnVFX(attackEffectPrefab, context.AttackOrigin, rotation, context.FollowInstigator ? context.Instigator.transform : null);
     }
 
     /// <summary>

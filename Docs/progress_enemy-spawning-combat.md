@@ -91,11 +91,10 @@
 **Phase 3: Visual Polish**
 - [X] Create basic enemy death particle effects system
 - [X] Integrate particle effects with enemy death events
-- [ ] Add visual feedback for room clearing
 
 **Phase 4: Testing & Polish**
-- [ ] Test room clearing mechanics with existing enemy prefabs
-- [ ] Verify door locking/unlocking works correctly
+- [X] Test room clearing mechanics with existing enemy prefabs
+- [X] Verify door locking/unlocking works correctly
 - [ ] Performance testing with multiple enemies
 
 **Clarifying Questions & Decisions:**
@@ -111,9 +110,12 @@
     - **Decision**: All doors will lock when enemies are present.
 
 ### Step 5: Visual Polish (Not Started)
-- [ ] Add particle effects for enemy death
-- [ ] Implement damage number spawning
+- [X] Add particle effects for enemy death
+- [X] Implement damage number spawning
 - [ ] Create attack effect visualization
+
+### Step 99: TECH DEBT - to do later
+- [ ] Add visual feedback for room clearing
 
 ## Testing & Integration Notes
 

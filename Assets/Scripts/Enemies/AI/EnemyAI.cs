@@ -61,8 +61,6 @@ public class EnemyAI : MonoBehaviour
             return;
         }
         
-        // Allow attacking immediately upon seeing the player
-        _timeSinceLastAttack = _enemy.Stats.attackCooldown; 
         SetState(EnemyAIState.Passive);
     }
 
@@ -168,8 +166,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private void HandleAttackingState()
     {
-        // Stop moving to attack
-        _rb.linearVelocity = Vector2.zero;
+        _rb.linearVelocity = Vector2.zero;  // stop moving to attack
 
         // Attack on cooldown
         if (_timeSinceLastAttack >= _enemy.Stats.attackCooldown)

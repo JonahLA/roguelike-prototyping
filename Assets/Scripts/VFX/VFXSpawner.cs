@@ -35,8 +35,9 @@ public class VFXSpawner : MonoBehaviour
     /// <param name="prefab">The VFX GameObject to spawn.</param>
     /// <param name="position">The world position to spawn at.</param>
     /// <param name="rotation">The world rotation to spawn with.</param>
+    /// <param name="parent">(Optional) The parent object for the effect.</param>
     /// <returns>The spawned VFX GameObject instance, or null if the prefab is invalid.</returns>
-    public GameObject SpawnVFX(GameObject prefab, Vector3 position, Quaternion rotation)
+    public GameObject SpawnVFX(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         if (prefab == null)
         {
@@ -54,6 +55,7 @@ public class VFXSpawner : MonoBehaviour
         {
             vfxInstance = _pool[prefab].Dequeue();
             vfxInstance.transform.SetPositionAndRotation(position, rotation);
+            if (parent != null) vfxInstance.transform.SetParent(parent, worldPositionStays: true);
             vfxInstance.SetActive(true);
         }
         else
