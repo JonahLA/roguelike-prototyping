@@ -14,6 +14,9 @@ GameObject:
   - component: {fileID: 5380536606358596483}
   - component: {fileID: 8897321430151870099}
   - component: {fileID: 4291228630211249904}
+  - component: {fileID: 3053043117147118363}
+  - component: {fileID: 264545361138828057}
+  - component: {fileID: 3954347583259631792}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -33,7 +36,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5158877584069921155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4624413583402712434
@@ -77,8 +81,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1081320293
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 23845fac9c96dae4baeccc649374630d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -206,9 +210,25 @@ MonoBehaviour:
     m_ActionId: b5450b2e-4041-4441-97ad-286a91f055c8
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
     m_ActionId: cf77baf2-bde2-47d6-9192-ff8083d7b1df
-    m_ActionName: 'Player/Open fullscreen map[/Keyboard/tab]'
+    m_ActionName: 'Player/Open fullscreen map[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d8fbfd8-cc6b-469a-b608-07398b2bfc94
+    m_ActionName: 'Player/Attack[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -227,3 +247,103 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+--- !u!114 &3053043117147118363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6842126363844183855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d46120f76bb5494ab50bc37b8fe9483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 10
+  _startingHealth: 7
+  _immunityDuration: 0.5
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamageTaken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &264545361138828057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6842126363844183855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb4a5a93239f5040ae9496d22b0fc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentAttackSO: {fileID: 11400000, guid: f3df01cf2ba22e140b3e2c06a2a293f9, type: 2}
+  _attackOriginPoint: {fileID: 5158877584069921155}
+  _attackOriginDistance: 1
+  _attackActionReference: {fileID: 970915018872307648, guid: 04c3786b0f3b49f468082514e375bd89, type: 3}
+--- !u!114 &3954347583259631792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6842126363844183855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47948f7f3dfe334da361e7276920fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 3053043117147118363}
+  _scriptsToDisable:
+  - {fileID: 4291228630211249904}
+  - {fileID: 264545361138828057}
+  - {fileID: 3053043117147118363}
+  _spritesToHide:
+  - {fileID: 4624413583402712434}
+  _deathVFXPrefab: {fileID: 7251520211603556830, guid: 2f03f2443f5029244a18250aee101448, type: 3}
+  OnDeathEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  _animator: {fileID: 0}
+  _deathTrigger: Death
+  OnLootDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  _deathScreenSceneName: DeathScreen
+--- !u!1 &7766204198605158057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5158877584069921155}
+  m_Layer: 0
+  m_Name: Attack Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5158877584069921155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766204198605158057}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4283529629492989094}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

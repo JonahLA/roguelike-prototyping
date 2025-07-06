@@ -72,7 +72,7 @@ public class DoorController : MonoBehaviour
     /// Gets the room this door is connected to.
     /// Returns null if the door is not connected.
     /// </summary>
-    public Room connectedRoom => _connectedRoom;
+    public Room ConnectedRoom => _connectedRoom;
 
     /// <summary>
     /// Event triggered when the player enters an open and connected door.
@@ -97,11 +97,9 @@ public class DoorController : MonoBehaviour
 
     private void Awake()
     {
-        // Initialize components if they weren\'t assigned in the inspector
-        if (_doorRenderer == null)
-            _doorRenderer = GetComponentInChildren<SpriteRenderer>();
-        if (_doorCollider == null)
-            _doorCollider = GetComponent<Collider2D>();
+        // Initialize components if they weren't assigned in the inspector
+        if (_doorRenderer == null) _doorRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (_doorCollider == null) _doorCollider = GetComponent<Collider2D>();
 
         _parentRoom = GetComponentInParent<Room>();
 
@@ -203,6 +201,8 @@ public class DoorController : MonoBehaviour
     /// </summary>
     public void Open()
     {
+        if (state == DoorState.Wall) return;
+
         if (state != DoorState.Locked)
         {
             SetState(DoorState.Open);
@@ -216,10 +216,20 @@ public class DoorController : MonoBehaviour
     }
 
     /// <summary>
+    /// Closes the door.
+    /// </summary>
+    public void Close()
+    {
+        if (state == DoorState.Wall) return;
+        SetState(DoorState.Closed);
+    }
+
+    /// <summary>
     /// Locks the door, making it impassable.
     /// </summary>
     public void Lock()
     {
+        if (state == DoorState.Wall) return;
         SetState(DoorState.Locked);
     }
 
@@ -229,6 +239,7 @@ public class DoorController : MonoBehaviour
     /// </summary>
     public void Unlock()
     {
+        if (state == DoorState.Wall) return;
         SetState(DoorState.Closed);
     }
 
@@ -320,7 +331,7 @@ public class DoorController : MonoBehaviour
             Direction.East => Direction.West,
             Direction.South => Direction.North,
             Direction.West => Direction.East,
-            _ => dir // Should not happen with cardinal directions
+            _ => dir  // should not happen with cardinal directions
         };
     }
 }

@@ -12,10 +12,10 @@ This document tracks the progress of code reviewing Unity scripts based on the p
       4. Unity Best Practices (MonoBehaviour Lifecycle, Event Handling - if applicable)
       Provide specific feedback and suggestions for improvement.
       ```
-- [x] `Assets/Scripts/PlayerController2D.cs`
+- [x] `Assets/Scripts/PlayerMovementController.cs`
     - Prompt:
       ```
-      Review the script `Assets/Scripts/PlayerController2D.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
+      Review the script `Assets/Scripts/PlayerMovementController.cs` based on the standards outlined in `Docs/code-review-standards.md`. Focus on:
       1. XML Documentation Comments (Public API, Clarity, Parameters & Returns, Remarks)
       2. Unity-Specific Documentation (Serialized Fields with Tooltips)
       3. Code Formatting & Style (Readability, Naming Conventions)

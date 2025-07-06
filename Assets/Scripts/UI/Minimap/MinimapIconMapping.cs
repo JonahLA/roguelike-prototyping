@@ -25,9 +25,9 @@ public class RoomTypeIconPair
 
 /// <summary>
 /// ScriptableObject to store mappings from RoomType to Sprite for minimap icons.
-/// Create instances of this via Assets > Create > Roguelike > Minimap Icon Mapping.
+/// Create instances of this via Assets > Create > Flare > Minimap Icon Mapping.
 /// </summary>
-[CreateAssetMenu(fileName = "MinimapIconMapping", menuName = "Roguelike/Minimap Icon Mapping", order = 1)]
+[CreateAssetMenu(fileName = "MinimapIconMapping", menuName = "Flare/Minimap Icon Mapping", order = 1)]
 public class MinimapIconMapping : ScriptableObject
 {
     /// <summary>

@@ -1,98 +1,111 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Represents a standard combat or puzzle room in the game. Inherits from <see cref="Room"/>.
 /// </summary>
 /// <remarks>
-/// Normal rooms typically contain enemies that must be cleared to progress.
-/// They may lock doors upon player entry and unlock them once all threats are neutralized.
+/// Normal rooms contain enemies that must be cleared to progress.
+/// They lock their doors upon player entry and unlock them once all threats are neutralized.
 /// </remarks>
 public class NormalRoom : Room
 {
-    /// <summary>
-    /// List to keep track of enemies spawned in this room.
-    /// </summary>
-    /// <remarks>
-    /// This list can be used to check if all enemies have been defeated.
-    /// Consider making this private if only managed internally by the room.
-    /// </remarks>
     [Tooltip("List of enemies currently active in this room.")]
-    [SerializeField] // If you want to see it in inspector for debugging, otherwise can be private
-    private List<GameObject> _spawnedEnemies = new();
+    private readonly List<GameObject> _spawnedEnemies = new();
 
-    // Example: Enemy spawning logic might go here or be triggered by an event
-    // public void SpawnEnemies(List<GameObject> enemyPrefabs, RoomContentPopulator populator, float difficulty) 
-    // {
-    //     // Use the populator to spawn enemies based on a template or specific prefabs
-    //     // Add spawned enemies to _spawnedEnemies list
-    // }
+    [Tooltip("Reference to the content populator utility.")]
+    [SerializeField] private RoomContentPopulator _roomContentPopulator;
 
-    /// <summary>
-    /// Called when the player enters this room.
-    /// </summary>
-    /// <remarks>
-    /// If the room has not been cleared, this method logs a message indicating that
-    /// enemy spawning and door locking logic should be implemented.
-    /// It calls the base class <see cref="Room.OnPlayerEnter()"/> method.
-    /// </remarks>
-    public override void OnPlayerEnter()
+    protected override void Awake()
     {
-        base.OnPlayerEnter();
-        if (!isCleared)
+        base.Awake();
+
+        // Fallback to find the populator if not assigned in the inspector
+        if (_roomContentPopulator == null)
         {
-            // LockDoors(); // Assuming a LockDoors method exists
-            // SpawnEnemies(); // Assuming a SpawnEnemies method exists
-            Debug.Log($"NormalRoom {gameObject.name}: Player entered, room not cleared. Implement enemy spawning/door locking.");
+            _roomContentPopulator = FindFirstObjectByType<RoomContentPopulator>();
+            if (_roomContentPopulator == null)
+            {
+                Debug.LogError("RoomContentPopulator not found in the scene.", this);
+            }
         }
     }
 
-    // Example of a private method that could be used for room-specific logic.
-    // private void LockDoors()
-    // {
-    //     Debug.Log($"NormalRoom {gameObject.name}: Locking doors.");
-    //     // Implementation for locking all doors in this room
-    //     foreach (var door in doors.Values)
-    //     {
-    //         if (door != null) door.Lock(); // Assuming a Lock() method exists on DoorController
-    //     }
-    // }
-
-    // Example of a private method to unlock doors, typically called when the room is cleared.
-    // private void UnlockDoors()
-    // {
-    //     Debug.Log($"NormalRoom {gameObject.name}: Unlocking doors.");
-    //     // Implementation for unlocking all doors
-    //     foreach (var door in doors.Values)
-    //     {
-    //         if (door != null) door.Unlock(); // Assuming an Unlock() method exists on DoorController
-    //     }
-    // }
-
     /// <summary>
-    /// Called when the room is cleared of all enemies or objectives.
+    /// Called when the player enters this room.
+    /// Spawns enemies and locks doors on first entry if the room is not already cleared.
     /// </summary>
-    /// <remarks>
-    /// This method should be called when the conditions for clearing the room are met (e.g., all enemies defeated).
-    /// It calls the base <see cref="Room.OnRoomClear()"/> method and could unlock doors.
-    /// </remarks>
-    public override void OnRoomClear()
+    public override void OnPlayerEnter()
     {
-        base.OnRoomClear();
-        // UnlockDoors();
-        Debug.Log($"NormalRoom {gameObject.name}: Room cleared. Doors should be unlocked.");
+        base.OnPlayerEnter();
+
+        if (isCleared) return;
+
+        if (template != null && template.enemySpawnPoints.Any())
+        {
+            SpawnEnemiesAndSecureRoom();
+        }
+        else
+        {
+            // If there are no enemies to spawn, the room is considered clear.
+            OnRoomClear();
+        }
     }
 
-    // Example method to check if all enemies are cleared.
-    // This would typically be called after an enemy is defeated.
-    // private void CheckEnemiesCleared()
-    // {
-    //     // Remove null entries (defeated enemies) from the list
-    //     _spawnedEnemies.RemoveAll(enemy => enemy == null);
-    // 
-    //     if (_spawnedEnemies.Count == 0 && !isCleared) // Ensure not already cleared
-    //     {
-    //         OnRoomClear();
-    //     }
-    // }
+    private void SpawnEnemiesAndSecureRoom()
+    {
+        var spawned = _roomContentPopulator.PopulateRoom(gameObject, template);
+        _spawnedEnemies.AddRange(spawned);
+
+        if (_spawnedEnemies.Count > 0)
+        {
+            Debug.Log($"NormalRoom {gameObject.name}: Player entered. Spawning {_spawnedEnemies.Count} enemies and locking doors.");
+            HealthManager.EntityDeath += HandleEnemyDeath;
+            CloseDoors();
+        }
+        else
+        {
+            // No enemies were actually spawned, so clear the room immediately.
+            OnRoomClear();
+        }
+    }
+
+    private void HandleEnemyDeath(GameObject deadEnemy)
+    {
+        if (_spawnedEnemies.Contains(deadEnemy))
+        {
+            _spawnedEnemies.Remove(deadEnemy);
+            CheckEnemiesCleared();
+        }
+    }
+
+    private void CheckEnemiesCleared()
+    {
+        if (_spawnedEnemies.Count == 0 && !isCleared)
+        {
+            OnRoomClear();
+        }
+    }
+
+    /// <summary>
+    /// Called when the room is cleared of all enemies.
+    /// Unlocks doors and marks the room as cleared.
+    /// </summary>
+    public override void OnRoomClear()
+    {
+        if (isCleared) return;
+        base.OnRoomClear();
+        HealthManager.EntityDeath -= HandleEnemyDeath;
+    }
+
+    private void OnDestroy()
+    {
+        // Ensure we unsubscribe from the event when the room is destroyed
+        // to prevent memory leaks.
+        if (_spawnedEnemies.Count > 0)
+        {
+            HealthManager.EntityDeath -= HandleEnemyDeath;
+        }
+    }
 }

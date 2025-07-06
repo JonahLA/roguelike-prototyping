@@ -65,7 +65,7 @@ To implement a dynamic minimap system that displays explored rooms, special room
     *   A system (possibly using a ScriptableObject or enum mapping) to associate room types with specific icons.
     *   Load and assign icons to Room UI prefabs as they are discovered.
 *   **Full Map Toggle:**
-    *   Input handling for the Tab key (or designated key) using Unity's new Input System. This will involve creating a method that expects an `InputAction.CallbackContext` (similar to `PlayerController2D.OnMove`).
+    *   Input handling for the Tab key (or designated key) using Unity's new Input System. This will involve creating a method that expects an `InputAction.CallbackContext` (similar to `PlayerMovementController.OnMove`).
     *   Toggle visibility of the standard minimap and the full map overlay.
     *   The full map overlay should display all *explored* rooms in their correct relative positions.
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BSPDungeonConfig", menuName = "Roguelike/Dungeon Config/BSP")]
+[CreateAssetMenu(fileName = "BSPDungeonConfig", menuName = "Flare/Dungeon Config/BSP")]
 public class BSPDungeonConfig : ScriptableObject
 {
     [Header("BSP Parameters")]

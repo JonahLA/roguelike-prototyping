@@ -4,7 +4,7 @@ Tracking the current status of the Player Setup feature from the implementation 
 
 - [X] Create Player prefab with placeholder sprite
 - [X] Add and configure SpriteRenderer, Rigidbody2D, and Collider2D components
-- [X] Implement `PlayerController2D` script for movement input and physics
+- [X] Implement `PlayerMovementController` script for movement input and physics
 - [X] Set up orthographic camera and follow behavior (Cinemachine or custom)
 - [X] Playtest movement in an empty scene and verify responsiveness
 

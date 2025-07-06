@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Represents a boss room in the game. Inherits from the base <see cref="Room"/> class.
@@ -9,6 +11,27 @@ using UnityEngine;
 /// </remarks>
 public class BossRoom : Room
 {
+    [Tooltip("List of enemies currently active in this room.")]
+    private readonly List<GameObject> _spawnedEnemies = new();
+
+    [Tooltip("Reference to the content populator utility.")]
+    [SerializeField] private RoomContentPopulator _roomContentPopulator;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        // Fallback to find the populator if not assigned in the inspector
+        if (_roomContentPopulator == null)
+        {
+            _roomContentPopulator = FindFirstObjectByType<RoomContentPopulator>();
+            if (_roomContentPopulator == null)
+            {
+                Debug.LogError($"[BossRoom {gameObject.name}] RoomContentPopulator not found in the scene.", this);
+            }
+        }
+    }
+
     /// <summary>
     /// Called when the player enters this room.
     /// </summary>
@@ -20,33 +43,74 @@ public class BossRoom : Room
     public override void OnPlayerEnter()
     {
         base.OnPlayerEnter();
-        if (!isCleared)
+
+        if (isCleared) return;
+        CloseDoors();
+
+        if (template != null && template.enemySpawnPoints.Any())
         {
-            // LockDoors();
-            Debug.Log($"BossRoom {gameObject.name}: Player entered, room not cleared. Implement boss fight/door locking.");
+            SpawnEnemiesAndSecureRoom();
+        }
+        else
+        {
+            // If there are no enemies to spawn, the room is considered clear.
+            OnRoomClear();
         }
     }
 
-    // Example of a private method that could be used for boss-specific logic.
-    // private void LockDoors()
-    // {
-    //     Debug.Log($"BossRoom {gameObject.name}: Locking doors.");
-    //     // Implementation for locking all doors in this room
-    //     foreach (var door in doors.Values)
-    //     {
-    //         if (door != null) door.Lock(); // Assuming a Lock() method exists on DoorController
-    //     }
-    // }
+    private void SpawnEnemiesAndSecureRoom()
+    {
+        var spawned = _roomContentPopulator.PopulateRoom(gameObject, template);
+        _spawnedEnemies.AddRange(spawned);
 
-    // Example of how boss defeat might unlock doors
-    // public void OnBossDefeated()
-    // {
-    //     Debug.Log($"BossRoom {gameObject.name}: Boss defeated, unlocking doors.");
-    //     isCleared = true; // Mark room as cleared
-    //     // foreach (var door in doors.Values)
-    //     // {
-    //     //     if (door != null) door.Unlock(); // Assuming an Unlock() method exists on DoorController
-    //     // }
-    //     // Potentially open a path to the next stage or trigger other events
-    // }
+        if (_spawnedEnemies.Count > 0)
+        {
+            Debug.Log($"[BossRoom {gameObject.name}] Player entered. Spawning {_spawnedEnemies.Count} enemies and locking doors.");
+            HealthManager.EntityDeath += HandleEnemyDeath;
+            CloseDoors();
+        }
+        else
+        {
+            // No enemies were actually spawned, so clear the room immediately.
+            OnRoomClear();
+        }
+    }
+
+    private void HandleEnemyDeath(GameObject deadEnemy)
+    {
+        if (_spawnedEnemies.Contains(deadEnemy))
+        {
+            _spawnedEnemies.Remove(deadEnemy);
+            CheckEnemiesCleared();
+        }
+    }
+
+    private void CheckEnemiesCleared()
+    {
+        if (_spawnedEnemies.Count == 0 && !isCleared)
+        {
+            OnRoomClear();
+        }
+    }
+
+    /// <summary>
+    /// Called when the room is cleared of all enemies.
+    /// Unlocks doors and marks the room as cleared.
+    /// </summary>
+    public override void OnRoomClear()
+    {
+        if (isCleared) return;
+        base.OnRoomClear();
+        HealthManager.EntityDeath -= HandleEnemyDeath;
+    }
+
+    private void OnDestroy()
+    {
+        // Ensure we unsubscribe from the event when the room is destroyed
+        // to prevent memory leaks.
+        if (_spawnedEnemies.Count > 0)
+        {
+            HealthManager.EntityDeath -= HandleEnemyDeath;
+        }
+    }
 }

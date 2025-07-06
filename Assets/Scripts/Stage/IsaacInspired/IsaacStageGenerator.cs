@@ -25,9 +25,9 @@ public class IsaacStageGenerator : MonoBehaviour
     [Tooltip("If true, a random seed will be used for generation. If false, the specified Seed will be used.")]
     [SerializeField] private bool _useRandomSeed = true;
 
-    [Header("Room Placement")] // New Header
+    [Header("Room Placement")]
     [Tooltip("The separation distance in world units between the centers of adjacent rooms.")]
-    [SerializeField] private float _roomWorldSeparation = 50f; // New field for world separation
+    [SerializeField] private float _roomWorldSeparation = 50f;
 
     [Header("Room Templates")]
     [Tooltip("List of templates to be used for the Start room.")]
@@ -51,16 +51,8 @@ public class IsaacStageGenerator : MonoBehaviour
     private SpecialRoomFactory _roomFactory;
     private RoomContentPopulator _roomContentPopulator;
 
-    // Added for branch difficulty calculation consistency
-    private const float BranchDifficultyIncrement = 0.1f; 
     private static readonly Vector2Int InvalidPosition = new(-1, -1); // Sentinel for invalid/not-found positions
     private const int MaxSpecialRoomPlacementAttempts = 20;
-
-    private const float StartRoomDifficulty = 0.0f;
-    private const float TreasureRoomDifficulty = 0.1f;
-    private const float ShopRoomDifficulty = 0.0f;
-    private const float BossRoomDifficulty = 1.0f;
-
 
     /// <summary>
     /// Initializes and executes the entire stage generation process.
@@ -70,7 +62,7 @@ public class IsaacStageGenerator : MonoBehaviour
     /// <returns>The generated <see cref="StageGrid"/> containing all placed rooms and their connections.</returns>
     public StageGrid GenerateStage()
     {
-        InitializeGenerator(); 
+        InitializeGenerator();
 
         Vector2Int startPos = _gridSize / 2;
         RoomPlacementResult startRoomResult = PlaceRoom(startPos, RoomType.Start);
@@ -79,15 +71,6 @@ public class IsaacStageGenerator : MonoBehaviour
         {
             Debug.LogError("[StageGen] Failed to place Start Room or PlacedRoom is null. Aborting generation.");
             return _stageGrid; 
-        }
-        
-        if (startRoomResult.PlacedRoom.gameObject != null)
-        {
-            _roomContentPopulator.PopulateRoom(startRoomResult.PlacedRoom.gameObject, startRoomResult.PlacedRoom.template, 0f); // Difficulty 0 for start room
-        }
-        else
-        {
-            Debug.LogWarning($"[StageGen] Start room '{startRoomResult.PlacedRoom.template.roomName}' GameObject is null after placement. Cannot populate.");
         }
 
         int mainPathLength = _random.Next(_minMainPathLength, _maxMainPathLength + 1);
@@ -149,9 +132,8 @@ public class IsaacStageGenerator : MonoBehaviour
 
         for (int i = 0; i < length; i++)
         {
-            Direction requiredDoorDirectionOnNewRoom;
-            Vector2Int nextPos = GetNextRoomPosition(currentPos, path, previousRoomResult, out requiredDoorDirectionOnNewRoom);
-            
+            Vector2Int nextPos = GetNextRoomPosition(currentPos, path, previousRoomResult, out Direction requiredDoorDirectionOnNewRoom);
+
             if (nextPos == Vector2Int.one * -1)
             {
                 Debug.LogWarning($"[StageGen] MainPath: No valid position found after {currentPos} for a Normal room. Path may be shorter than intended.");
@@ -167,23 +149,12 @@ public class IsaacStageGenerator : MonoBehaviour
             path.Add(nextPos);
             currentPos = nextPos;
             previousRoomResult = newRoomResult;
-
-            if (newRoomResult.PlacedRoom.gameObject != null)
-            {
-                float difficulty = Mathf.Clamp01((float)path.Count / _maxMainPathLength); 
-                _roomContentPopulator.PopulateRoom(newRoomResult.PlacedRoom.gameObject, newRoomResult.PlacedRoom.template, difficulty);
-            }
-            else
-            {
-                Debug.LogWarning($"[StageGen] Normal room '{newRoomResult.PlacedRoom.template.roomName}' GameObject is null after placement in MainPath. Cannot populate.");
-            }
         }
 
         if (previousRoomResult != null && previousRoomResult.Success && previousRoomResult.PlacedRoom != null &&
             (previousRoomResult.PlacedRoom.template.roomType != RoomType.Start || (previousRoomResult.PlacedRoom.template.roomType == RoomType.Start && path.Count > 1)))
         {
-            Direction bossRoomRequiredDoorDir;
-            Vector2Int bossRoomPos = GetNextRoomPosition(currentPos, path, previousRoomResult, out bossRoomRequiredDoorDir);
+            Vector2Int bossRoomPos = GetNextRoomPosition(currentPos, path, previousRoomResult, out Direction bossRoomRequiredDoorDir);
 
             if (bossRoomPos != Vector2Int.one * -1)
             {
@@ -192,15 +163,6 @@ public class IsaacStageGenerator : MonoBehaviour
                 {
                     path.Add(bossRoomPos);
                     Debug.Log($"[StageGen] Boss room placed at {bossRoomPos} connected to {currentPos}");
-
-                    if (bossRoomResult.PlacedRoom.gameObject != null)
-                    {
-                        _roomContentPopulator.PopulateRoom(bossRoomResult.PlacedRoom.gameObject, bossRoomResult.PlacedRoom.template, 1.0f); // Max difficulty for boss
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[StageGen] Boss room '{bossRoomResult.PlacedRoom.template.roomName}' GameObject is null after placement. Cannot populate.");
-                    }
                 }
                 else
                 {
@@ -251,8 +213,7 @@ public class IsaacStageGenerator : MonoBehaviour
                                                                .ToList();
                     RoomPlacementResult parentRoomInfo = new RoomPlacementResult(branchParentRoom, parentPotentialOutgoingDoors);
 
-                    int branchLength = 1 + _random.Next(Mathf.Max(1, _maxMainPathLength / 3)); 
-                    // Corrected call to CreateBranch, passing the necessary parentRoomInfo and parentDifficulty
+                    int branchLength = 1 + _random.Next(Mathf.Max(1, _maxMainPathLength / 3));
                     CreateBranch(branchParentGridPos, parentRoomInfo, branchLength, parentDifficulty);
                 }
                 else
@@ -273,16 +234,17 @@ public class IsaacStageGenerator : MonoBehaviour
     /// <param name="initialParentDifficulty">The difficulty rating of the parent room, used as a base for calculating the difficulty of rooms in this branch.</param>
     private void CreateBranch(Vector2Int parentInitialPos, RoomPlacementResult parentInitialRoomResult, int length, float initialParentDifficulty)
     {
-        List<Vector2Int> currentBranchPath = new List<Vector2Int>(); 
-        currentBranchPath.Add(parentInitialPos); 
+        List<Vector2Int> currentBranchPath = new()
+        {
+            parentInitialPos
+        }; 
 
         Vector2Int currentPosInBranch = parentInitialPos;
         RoomPlacementResult previousRoomResultInBranch = parentInitialRoomResult;
 
         for (int j = 0; j < length; j++) 
         {
-            Direction requiredDoorOnNewRoom;
-            Vector2Int nextPos = GetNextRoomPosition(currentPosInBranch, currentBranchPath, previousRoomResultInBranch, out requiredDoorOnNewRoom);
+            Vector2Int nextPos = GetNextRoomPosition(currentPosInBranch, currentBranchPath, previousRoomResultInBranch, out Direction requiredDoorOnNewRoom);
 
             if (nextPos == Vector2Int.one * -1)
             {
@@ -294,17 +256,6 @@ public class IsaacStageGenerator : MonoBehaviour
 
             if (branchRoomPlacement != null && branchRoomPlacement.Success && branchRoomPlacement.PlacedRoom != null)
             {
-                if (_roomContentPopulator != null && branchRoomPlacement.PlacedRoom.gameObject != null)
-                {
-                    // Difficulty for branch rooms increases from the parent's difficulty
-                    float branchRoomDifficulty = Mathf.Clamp(initialParentDifficulty + (j + 1) * BranchDifficultyIncrement, 0f, 1f);
-                    _roomContentPopulator.PopulateRoom(branchRoomPlacement.PlacedRoom.gameObject, branchRoomPlacement.PlacedRoom.template, branchRoomDifficulty);
-                }
-                else
-                {
-                     Debug.LogWarning($"[StageGen] Branch room '{branchRoomPlacement.PlacedRoom?.template?.roomName ?? "N/A"}' GameObject is null or populator is null. Cannot populate.");
-                }
-
                 currentBranchPath.Add(nextPos); 
                 currentPosInBranch = nextPos;
                 previousRoomResultInBranch = branchRoomPlacement;
@@ -353,14 +304,6 @@ public class IsaacStageGenerator : MonoBehaviour
                 if (placedResult != null && placedResult.Success && placedResult.PlacedRoom != null) 
                 {
                     treasureRoomsPlaced++;
-                    if (placedResult.PlacedRoom.gameObject != null)
-                    {
-                        _roomContentPopulator.PopulateRoom(placedResult.PlacedRoom.gameObject, placedResult.PlacedRoom.template, TreasureRoomDifficulty);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[StageGen] Treasure room '{placedResult.PlacedRoom.template.roomName}' GameObject is null after placement. Cannot populate.");
-                    }
                 }
                 else Debug.LogWarning($"[StageGen] Failed to place Treasure room at {specialRoomPos} requiring door {requiredDoorDir} or PlacedRoom is null.");
             }
@@ -389,15 +332,7 @@ public class IsaacStageGenerator : MonoBehaviour
                 RoomPlacementResult placedResult = PlaceRoom(specialRoomPos, RoomType.Shop, requiredDoorDir);
                 if (placedResult != null && placedResult.Success && placedResult.PlacedRoom != null)
                 {
-                     shopRoomsPlaced++;
-                    if (placedResult.PlacedRoom.gameObject != null)
-                    {
-                        _roomContentPopulator.PopulateRoom(placedResult.PlacedRoom.gameObject, placedResult.PlacedRoom.template, ShopRoomDifficulty);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[StageGen] Shop room '{placedResult.PlacedRoom.template.roomName}' GameObject is null after placement. Cannot populate.");
-                    }
+                    shopRoomsPlaced++;
                 }
                 else Debug.LogWarning($"[StageGen] Failed to place Shop room at {specialRoomPos} requiring door {requiredDoorDir} or PlacedRoom is null.");
             }
@@ -574,7 +509,6 @@ public class IsaacStageGenerator : MonoBehaviour
         }
 
         _stageGrid.AddRoom(position, roomPlacementResult.PlacedRoom);
-        // Population is handled by the calling methods (GenerateMainPath, CreateBranch, PlaceSpecialRooms)
         return roomPlacementResult; 
     }
 
@@ -584,7 +518,6 @@ public class IsaacStageGenerator : MonoBehaviour
     /// </summary>
     private void ConnectRooms()
     {
-        // Corrected call to ConnectRoomsInGrid
         _roomFactory.ConnectRoomsInGrid(_stageGrid);
     }
 

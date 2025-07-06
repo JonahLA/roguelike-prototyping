@@ -20,6 +20,8 @@ Project Instructions
 - Optimize performance for smooth, real-time gameplay.
 - Implement a robust tracking system for player decisions to influence game outcomes.
 - Maintain clean, well-documented, and testable code.
+  - Follow the coding standards contained in /.github/instructions/code-standards.instructions.md
 
 Additional Notes
 This project is in the prototyping phase focusing on mechanics and implementations. Feel free to ask questions if you need more information or have suggestions for further improvements.
+Note that for this project, we are not wrapping classes in namespaces - - don't do that with your code.
