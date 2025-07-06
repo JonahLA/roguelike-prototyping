@@ -45,30 +45,34 @@
 - [x] Editor preview functionality for design iteration
 - [x] **Automatic player discovery and health state initialization**
 
-## Next Steps
+### Step 2: Player Combat Foundation
+- [X] Create `IPlayerAttack` interface and attack strategy architecture
+- [X] Implement `SwordSwingAttack.cs` as the primary melee attack
+- [X] Create `PlayerCombat.cs` for input handling and attack coordination
+- [X] Integrate with existing PlayerMovementController
 
-### Step 2: Player Combat Foundation (Not Started)
-- [ ] Create `IPlayerAttack` interface and attack strategy architecture
-- [ ] Implement `SwordSwingAttack.cs` as the primary melee attack
-- [ ] Create `PlayerCombat.cs` for input handling and attack coordination
-- [ ] Integrate with existing PlayerMovementController
+### Step 3: Enemy AI and Behavior
+- [X] Implement strategy interfaces (`ITargetingStrategy`, `IMovementStrategy`, `IAttackStrategy`)
+- [X] Create basic concrete strategies (wander, pursue, walk, melee)
+- [X] Implement `EnemyAI.cs` state coordinator with strategy composition
+- [X] Add player detection and damage dealing
 
-### Step 3: Enemy AI and Behavior (Not Started)
-- [ ] Implement strategy interfaces (`ITargetingStrategy`, `IMovementStrategy`, `IAttackStrategy`)
-- [ ] Create basic concrete strategies (wander, pursue, walk, melee)
-- [ ] Implement `EnemyAI.cs` state coordinator with strategy composition
-- [ ] Add player detection and damage dealing
+### Step 4: Room Integration and Polish
+- [X] Enhance `NormalRoom` with enemy tracking via death events
+- [X] Implement door locking/unlocking mechanics
+- [X] Add particle effects for enemy death
 
-### Step 4: Room Integration and Polish (Not Started)
-- [ ] Enhance `NormalRoom` with enemy tracking via death events
-- [ ] Implement door locking/unlocking mechanics
-- [ ] Add particle effects for enemy death
-- [ ] Create basic enemy prefabs with strategy configurations
+### Step 5: Visual Polish
+- [X] Add particle effects for enemy death
+- [X] Implement damage number spawning
+- [X] Create attack effect visualization
 
-### Step 5: Visual Polish (Not Started)
-- [ ] Add particle effects for enemy death
-- [ ] Implement damage number spawning
-- [ ] Create attack effect visualization
+### Step 99: Tech debt / next steps
+- [ ] Write documentation on how to implement each system into the scene
+    - Write as Markdown docs in the `Docs` directory
+- [ ] Fix issue of damage particles not being returned to the `VFXSpawner`
+- [ ] Make other basic enemy prefabs with unique strategy configurations
+- [ ] Create bosses
 
 ## Testing & Integration Notes
 
