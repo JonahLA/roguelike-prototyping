@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridSize: {x: 5, y: 5}
-  _minMainPathLength: 2
-  _maxMainPathLength: 4
+  _minMainPathLength: 4
+  _maxMainPathLength: 6
   _specialRoomsCount: 0
   _branchProbability: 0.5
   _seed: 0
