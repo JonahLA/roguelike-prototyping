@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 
 /// <summary>
 /// Handles player combat, coordinating attacks based on input and player state.
-/// Requires a <see cref="PlayerController2D"/> component on the same GameObject.
+/// Requires a <see cref="PlayerMovementController"/> component on the same GameObject.
 /// </summary>
-[RequireComponent(typeof(PlayerController2D))]
+[RequireComponent(typeof(PlayerMovementController))]
 [AddComponentMenu("Gameplay/Player Combat")]
 public class PlayerCombat : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField]
     private InputActionReference _attackActionReference;
 
-    private PlayerController2D _playerController;
+    private PlayerMovementController _playerMovementController;
 
     /// <summary>
     /// Gets or sets the current attack strategy.
@@ -36,7 +36,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Awake()
     {
-        _playerController = GetComponent<PlayerController2D>();
+        _playerMovementController = GetComponent<PlayerMovementController>();
 
         if (_attackActionReference == null)
         {
@@ -77,7 +77,7 @@ public class PlayerCombat : MonoBehaviour
     private void Update()
     {
         // Update cooldown for the current attack strategy, if one is assigned.
-        _currentAttackSO?.UpdateCooldown(Time.deltaTime);
+        if (_currentAttackSO != null) _currentAttackSO.UpdateCooldown(Time.deltaTime);
     }
 
     /// <summary>
@@ -88,30 +88,30 @@ public class PlayerCombat : MonoBehaviour
     {
         if (_currentAttackSO == null)
         {
-            // Debug.LogWarning("PlayerCombat: CurrentAttackSO is not assigned. Cannot attack.", this);
+            Debug.LogWarning("[PlayerCombat] CurrentAttackSO is not assigned. Cannot attack.", this);
             return;
         }
 
-        if (_playerController == null) { // Should have been caught in Awake, but good for safety.
-            Debug.LogError("PlayerCombat: PlayerController2D not found. Cannot attack.", this);
+        if (_playerMovementController == null) { // Should have been caught in Awake, but good for safety.
+            Debug.LogError("[PlayerCombat] PlayerMovementController not found. Cannot attack.", this);
             return;
         }
 
-        if (!_playerController.CanPerformActions)
+        if (!_playerMovementController.CanPerformActions)
         {
-            // Debug.Log("PlayerCombat: Attack prevented by PlayerController (CanPerformActions is false).");
+            Debug.Log("[PlayerCombat] Attack prevented by PlayerMovementController (CanPerformActions is false).");
             return;
         }
 
         if (!_currentAttackSO.CanAttack())
         {
-            // Debug.Log($"PlayerCombat: Attack '{_currentAttackSO.name}' is on cooldown ({_currentAttackSO.CurrentCooldown}s remaining).");
+            Debug.Log($"[PlayerCombat] Attack '{_currentAttackSO.name}' is on cooldown ({_currentAttackSO.CurrentCooldown}s remaining).");
             return;
         }
 
         Vector2 attackOrigin = _attackOriginPoint != null ? (Vector2)_attackOriginPoint.position : (Vector2)transform.position;
-        Vector2 attackDirection = _playerController.FacingDirection; 
-        // Ensure direction is normalized if PlayerController2D doesn't guarantee it.
+        Vector2 attackDirection = _playerMovementController.FacingDirection; 
+        // Ensure direction is normalized if PlayerMovementController doesn't guarantee it.
         // For FacingDirection, it usually should be.
 
         // BaseDamage is now retrieved from the AttackContext within the SO, or directly from SO if needed.
@@ -120,6 +120,6 @@ public class PlayerCombat : MonoBehaviour
         AttackContext attackContext = new(this, attackOrigin, attackDirection, _currentAttackSO.BaseDamage);
         _currentAttackSO.Attack(attackContext);
 
-        // Debug.Log($"PlayerCombat: Attack performed with {_currentAttackSO.name} from {attackOrigin} in direction {attackDirection}.");
+        // Debug.Log($"[PlayerCombat] Attack performed with {_currentAttackSO.name} from {attackOrigin} in direction {attackDirection}.");
     }
 }

@@ -51,7 +51,7 @@
 - [ ] Create `IPlayerAttack` interface and attack strategy architecture
 - [ ] Implement `SwordSwingAttack.cs` as the primary melee attack
 - [ ] Create `PlayerCombat.cs` for input handling and attack coordination
-- [ ] Integrate with existing PlayerController2D
+- [ ] Integrate with existing PlayerMovementController
 
 ### Step 3: Enemy AI and Behavior (Not Started)
 - [ ] Implement strategy interfaces (`ITargetingStrategy`, `IMovementStrategy`, `IAttackStrategy`)

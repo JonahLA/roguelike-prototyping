@@ -46,14 +46,14 @@ public class EnemyAI : MonoBehaviour
 
         // Subscribe to the death event
         Health health = _enemy.Health;
-        health?.OnDeath.AddListener(HandleDeath);
+        if (health != null) health.OnDeath.AddListener(HandleDeath);
     }
 
     private void OnDestroy()
     {
         // Unsubscribe to prevent memory leaks
         Health health = _enemy.Health;
-        health?.OnDeath.RemoveListener(HandleDeath);
+        if (health != null) health.OnDeath.RemoveListener(HandleDeath);
     }
 
     private void Start()
@@ -204,7 +204,7 @@ public class EnemyAI : MonoBehaviour
         // When entering the passive state, immediately force a new wander target decision.
         if (_currentState == EnemyAIState.Passive)
         {
-             _timeInCurrentWanderTarget = _wanderTargetDwellTime;
+            _timeInCurrentWanderTarget = _wanderTargetDwellTime;
         }
     }
 

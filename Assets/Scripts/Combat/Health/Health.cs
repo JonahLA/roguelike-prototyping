@@ -224,7 +224,8 @@ public class Health : MonoBehaviour, IDamageable
     private void HandleDeath()
     {
         if (_isDead) return;
-        
+
+        Debug.Log($"[Health] {gameObject.name} died!");
         _isDead = true;
         
         // Use the VFXSpawner to create death particles from a pool

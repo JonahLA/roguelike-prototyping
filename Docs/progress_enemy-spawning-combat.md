@@ -42,7 +42,7 @@
 - [x] Create `IPlayerAttack` interface and attack strategy architecture
 - [x] Implement `SwordSwingAttack.cs` as the primary melee attack (`SwordSwingAttackSO.cs`)
 - [x] Create `PlayerCombat.cs` for input handling and attack coordination
-- [x] Integrate with existing PlayerController2D
+- [x] Integrate with existing PlayerMovementController
 
 ### Step 3: Enemy AI and Behavior (✅)
 - [x] **Phase 1: Core Structures**

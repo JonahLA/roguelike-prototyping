@@ -289,7 +289,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-  _deathParticlesPrefab: {fileID: 0}
+  _deathParticlesPrefab: {fileID: 7251520211603556830, guid: 2f03f2443f5029244a18250aee101448, type: 3}
 --- !u!114 &264545361138828057
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -227,7 +227,7 @@ PURSUING (PursuePlayerDirectlyStrategy) → Player out of range → Return PASSI
 - **Attack Visualization**: Clear attack ranges and timing
 
 ## Technical Debt
-- Refactor `PlayerController2D.OnMove` to use `InputActionReference` instead of relying on `PlayerInput` component's UnityEvent/SendMessage behavior for consistency and better C# control.
+- Refactor `PlayerMovementController.OnMove` to use `InputActionReference` instead of relying on `PlayerInput` component's UnityEvent/SendMessage behavior for consistency and better C# control.
 
 ## Implementation Steps
 
@@ -241,7 +241,7 @@ PURSUING (PursuePlayerDirectlyStrategy) → Player out of range → Return PASSI
    - Create `IPlayerAttack` interface and attack strategy architecture
    - Implement `SwordSwingAttack.cs` as the primary melee attack
    - Create `PlayerCombat.cs` for input handling and attack coordination
-   - Integrate with existing PlayerController2D
+   - Integrate with existing PlayerMovementController
 
 3. **Enemy AI and Behavior**
    - Implement strategy interfaces (`ITargetingStrategy`, `IMovementStrategy`, `IAttackStrategy`)

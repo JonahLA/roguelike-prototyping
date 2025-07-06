@@ -19,7 +19,7 @@ Each vertical slice follows the cycle: **design → code → playtest**.
   - Use a placeholder square sprite or simple 2D sprite asset
   - Components: `SpriteRenderer`, `Rigidbody2D` (Body Type: Dynamic, freeze Z rotation), `Collider2D` (BoxCollider2D or CircleCollider2D)
   - Optional: `Animator` for future sprite animations
-- `PlayerController2D` script:
+- `PlayerMovementController` script:
   - Handle `Input.GetAxis("Horizontal")` and `Input.GetAxis("Vertical")`
   - Move the player by setting `Rigidbody2D.velocity` or using `Rigidbody2D.MovePosition`
   - Ensure movement is frame-rate independent (use `FixedUpdate` for physics)

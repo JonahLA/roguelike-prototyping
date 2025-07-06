@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [AddComponentMenu("Gameplay/Player Controller 2D")]
-public class PlayerController2D : MonoBehaviour
+public class PlayerMovementController : MonoBehaviour
 {
     [Header("Movement")]
     [Tooltip("Movement speed in units per second")]
@@ -34,7 +34,7 @@ public class PlayerController2D : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 delta = _moveInput * _moveSpeed * Time.fixedDeltaTime;
+        Vector2 delta = _moveSpeed * Time.fixedDeltaTime * _moveInput;
         _rb.MovePosition(_rb.position + delta);
 
         // Update facing direction if there is movement input
