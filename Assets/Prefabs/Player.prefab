@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 4291228630211249904}
   - component: {fileID: 3053043117147118363}
   - component: {fileID: 264545361138828057}
+  - component: {fileID: 3954347583259631792}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -289,7 +290,6 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-  _deathParticlesPrefab: {fileID: 7251520211603556830, guid: 2f03f2443f5029244a18250aee101448, type: 3}
 --- !u!114 &264545361138828057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,3 +305,32 @@ MonoBehaviour:
   _currentAttackSO: {fileID: 11400000, guid: f3df01cf2ba22e140b3e2c06a2a293f9, type: 2}
   _attackOriginPoint: {fileID: 4502418202954766317}
   _attackActionReference: {fileID: 970915018872307648, guid: 04c3786b0f3b49f468082514e375bd89, type: 3}
+--- !u!114 &3954347583259631792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6842126363844183855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47948f7f3dfe334da361e7276920fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 3053043117147118363}
+  _scriptsToDisable:
+  - {fileID: 4291228630211249904}
+  - {fileID: 264545361138828057}
+  - {fileID: 3053043117147118363}
+  _spritesToHide:
+  - {fileID: 4624413583402712434}
+  _deathVFXPrefab: {fileID: 7251520211603556830, guid: 2f03f2443f5029244a18250aee101448, type: 3}
+  OnDeathEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  _animator: {fileID: 0}
+  _deathTrigger: Death
+  OnLootDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  _deathScreenSceneName: DeathScreen

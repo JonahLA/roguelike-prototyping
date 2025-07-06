@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -8,9 +7,6 @@ using UnityEngine.SceneManagement;
 [AddComponentMenu("Combat/Player Death Handler")]
 public class PlayerDeathHandler : EntityDeathHandler
 {
-    [Header("Player-Specific References")]
-    [Tooltip("Input scripts to disable on death (e.g., PlayerInput, custom input handlers)")]
-    [SerializeField] private MonoBehaviour[] _inputScriptsToDisable;
 
     [Tooltip("Name of the death screen scene to load additively.")]
     [SerializeField] private string _deathScreenSceneName = "DeathScreen";
@@ -18,13 +14,6 @@ public class PlayerDeathHandler : EntityDeathHandler
     protected override void HandleDeath()
     {
         base.HandleDeath();
-
-        // Disable input scripts
-        foreach (var script in _inputScriptsToDisable)
-        {
-            if (script != null)
-                script.enabled = false;
-        }
 
         // Load death screen scene additively (placeholder)
         if (!string.IsNullOrEmpty(_deathScreenSceneName))

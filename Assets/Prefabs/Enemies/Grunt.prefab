@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4583748140308510180}
   - component: {fileID: 4379983647290184150}
   - component: {fileID: 1221521950013517138}
+  - component: {fileID: 658957938743827440}
   m_Layer: 6
   m_Name: Grunt
   m_TagString: Enemy
@@ -143,7 +144,6 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-  _deathParticlesPrefab: {fileID: 7251520211603556830, guid: 2f03f2443f5029244a18250aee101448, type: 3}
 --- !u!114 &4379983647290184150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +175,32 @@ MonoBehaviour:
   _attackStrategy: {fileID: 11400000, guid: 00a13ce798e258c4eb873ff49eacc03d, type: 2}
   _wanderTargetDwellTime: 2
   _currentState: 0
+--- !u!114 &658957938743827440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83804837830833899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507d6f691bdf2b843bc697613c49b6f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 4583748140308510180}
+  _scriptsToDisable:
+  - {fileID: 1221521950013517138}
+  _spritesToHide:
+  - {fileID: 5233378707455000357}
+  _deathVFXPrefab: {fileID: 7251520211603556830, guid: 2f03f2443f5029244a18250aee101448, type: 3}
+  OnDeathEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  _animator: {fileID: 0}
+  _deathTrigger: Death
+  OnLootDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2434242114856325440
 GameObject:
   m_ObjectHideFlags: 0
