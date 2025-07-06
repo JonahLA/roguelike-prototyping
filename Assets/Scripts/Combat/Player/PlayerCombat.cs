@@ -41,7 +41,7 @@ public class PlayerCombat : MonoBehaviour
         if (_attackActionReference == null)
         {
             Debug.LogError("Attack Action Reference is not set in PlayerCombat. Please assign it in the Inspector.", this);
-            enabled = false; // Disable component if input is not set up
+            enabled = false;
             return;
         }
         if (_attackActionReference.action == null)
@@ -59,7 +59,6 @@ public class PlayerCombat : MonoBehaviour
             _attackActionReference.action.performed += OnAttackPerformed;
             _attackActionReference.action.Enable();
         }
-        // No warning here if null, Awake already handled it.
     }
 
     private void OnDisable()
@@ -67,16 +66,12 @@ public class PlayerCombat : MonoBehaviour
         if (_attackActionReference != null && _attackActionReference.action != null)
         {
             _attackActionReference.action.performed -= OnAttackPerformed;
-            // It's generally good practice to disable actions if they are not shared or managed elsewhere.
-            // However, if the action is part of a shared asset enabled/disabled globally, this might not be necessary.
-            // For now, let's assume it might be shared and avoid disabling it here unless issues arise.
-            // _attackActionReference.action.Disable(); 
+            _attackActionReference.action.Disable(); 
         }
     }
 
     private void Update()
     {
-        // Update cooldown for the current attack strategy, if one is assigned.
         if (_currentAttackSO != null) _currentAttackSO.UpdateCooldown(Time.deltaTime);
     }
 
@@ -92,7 +87,7 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
-        if (_playerMovementController == null) { // Should have been caught in Awake, but good for safety.
+        if (_playerMovementController == null) {
             Debug.LogError("[PlayerCombat] PlayerMovementController not found. Cannot attack.", this);
             return;
         }
@@ -110,16 +105,10 @@ public class PlayerCombat : MonoBehaviour
         }
 
         Vector2 attackOrigin = _attackOriginPoint != null ? (Vector2)_attackOriginPoint.position : (Vector2)transform.position;
-        Vector2 attackDirection = _playerMovementController.FacingDirection; 
-        // Ensure direction is normalized if PlayerMovementController doesn't guarantee it.
-        // For FacingDirection, it usually should be.
+        Vector2 attackDirection = _playerMovementController.FacingDirection;
 
-        // BaseDamage is now retrieved from the AttackContext within the SO, or directly from SO if needed.
-        // float baseDamage = _currentAttackSO.BaseDamage; 
-
-        AttackContext attackContext = new(this, attackOrigin, attackDirection, _currentAttackSO.BaseDamage);
+        float baseDamage = _currentAttackSO.BaseDamage; 
+        AttackContext attackContext = new(this, attackOrigin, attackDirection, baseDamage);
         _currentAttackSO.Attack(attackContext);
-
-        // Debug.Log($"[PlayerCombat] Attack performed with {_currentAttackSO.name} from {attackOrigin} in direction {attackDirection}.");
     }
 }

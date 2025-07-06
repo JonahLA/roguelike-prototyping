@@ -41,18 +41,15 @@ public class SwordSwingAttackSO : PlayerAttackSO
         float angle = Vector2.SignedAngle(Vector2.up, context.AttackDirection.normalized);
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(boxCenter, effectiveBoxSize, angle, _hittableLayers);
-
-        Debug.Log($"SwordSwing: Attacking at {boxCenter} with size {effectiveBoxSize}, angle {angle}. Hits: {hits.Length}. Direction: {context.AttackDirection}");
-
         foreach (Collider2D hit in hits)
         {
             // Prevent hitting self if player is on a hittable layer by mistake
             if (context.Instigator != null && hit.gameObject == context.Instigator.gameObject) continue;
 
-            if (hit.TryGetComponent(out IDamageable damageable))
+            IDamageable damageable = hit.GetComponentInParent<IDamageable>();
+            if (damageable != null)
             {
-                damageable.TakeDamage(context.BaseDamage); // Use BaseDamage from context
-                Debug.Log($"SwordSwing: Hit {hit.name} for {context.BaseDamage} damage.");
+                damageable.TakeDamage(context.BaseDamage);
             }
         }
 

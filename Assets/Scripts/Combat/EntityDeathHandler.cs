@@ -78,7 +78,6 @@ public class EntityDeathHandler : MonoBehaviour
 
     protected virtual void HandleDeath()
     {
-        Debug.Log($"[EntityDeathHandler] Handling death...");
         if (_hasHandledDeath) return;
         _hasHandledDeath = true;
 
@@ -114,7 +113,6 @@ public class EntityDeathHandler : MonoBehaviour
         // Spawn VFX
         if (_deathVFXPrefab != null && VFXSpawner.Instance != null)
         {
-            Debug.Log("[EntityDeathHandler] Spawning death particles...");
             VFXSpawner.Instance.SpawnVFX(_deathVFXPrefab, transform.position, transform.rotation);
         }
 
