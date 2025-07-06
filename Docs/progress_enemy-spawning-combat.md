@@ -112,7 +112,7 @@
 ### Step 5: Visual Polish (Not Started)
 - [X] Add particle effects for enemy death
 - [X] Implement damage number spawning
-- [ ] Create attack effect visualization
+- [X] Create attack effect visualization
 
 ### Step 99: TECH DEBT - to do later
 - [ ] Add visual feedback for room clearing
