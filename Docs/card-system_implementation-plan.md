@@ -9,15 +9,15 @@ This plan details the modular, extensible implementation of the card system, inc
 
 ### 1. Card Data & Effect Architecture
 
-- [ ] **Card ScriptableObject**
+- [x] **Card ScriptableObject** _(Complete)_
   - Create a `Card` ScriptableObject with: `Name`, `FlareCost`, `CardType` (Damage, Buff, Debuff), description, and references to effect and targeting ScriptableObjects.
-- [ ] **CardEffect ScriptableObject**
+- [x] **CardEffect ScriptableObject** _(Complete)_
   - Define a base `CardEffect` ScriptableObject (e.g., `ICardEffect`).
   - Implement basic effects: damage, heal, buff, debuff.
-- [ ] **TargetingStrategy ScriptableObject**
+- [x] **TargetingStrategy ScriptableObject** _(Complete)_
   - Define a base `CardTargetingStrategySO` ScriptableObject.
   - Implement strategies: closest enemy, healthiest enemy, self, all enemies, etc.
-- [ ] **Extensibility for Upgrades**
+- [x] **Extensibility for Upgrades** _(Complete)_
   - Ensure Card and Effect data structures can be extended for upgrades (e.g., stat modifiers, effect overrides).
 
 ---
@@ -61,6 +61,16 @@ This plan details the modular, extensible implementation of the card system, inc
   - Displays the player’s hand (5 cards), supports selection and play/discard feedback.
 - [ ] **Flare Meter UI**
   - Visualizes current/max flare, animates changes, and provides feedback.
+
+---
+
+### 5.5. Buffs & Debuffs System
+
+- [ ] **Buff/Debuff System**
+  - Implement a modular Buff/Debuff system for applying temporary or permanent status effects to entities.
+  - Integrate with card effects and enemy abilities.
+  - Ensure effects can be stacked, timed, and removed/expired cleanly.
+  - Provide hooks for UI feedback (icons, timers, etc.).
 
 ---
 
