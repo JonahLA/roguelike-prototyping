@@ -14,13 +14,5 @@ public enum CardType
     /// <summary>
     /// A cursed card, typically associated with huge benefits with huge risk.
     /// </summary>
-    Cursed,
-    /// <summary>
-    /// A degrading card, which may lose power or have diminishing returns.
-    /// </summary>
-    Degrading,
-    /// <summary>
-    /// A buff card, used to enhance the player or allies.
-    /// </summary>
-    Buff
+    Cursed
 }

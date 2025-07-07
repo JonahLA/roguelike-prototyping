@@ -24,11 +24,11 @@ This plan details the modular, extensible implementation of the card system, inc
 
 ### 2. Deck & Hand Management
 
-- [ ] **DeckManager**
+- [X] **DeckManager**
   - Manages draw pile, discard pile, and shuffling.
   - Handles drawing a hand of 5 cards, discarding, and reshuffling.
   - Exposes events for hand updates.
-- [ ] **HandController**
+- [X] **HandController**
   - Manages the player’s current hand, card selection, and play/discard logic.
   - Supports both “discard manually” and “discard on play” modes (configurable).
   - Integrates with Unity’s new input system for keyboard controls.
@@ -111,6 +111,33 @@ This plan details the modular, extensible implementation of the card system, inc
   - Refine UI/UX for clarity and responsiveness.
 - [ ] **Playtest**
   - Draw from the deck, spend flare, play/discard cards, and see effects on enemies.
+
+---
+
+### CardInstance Design Decisions (2025-07-06)
+
+- **Upgrade System:**
+  - Upgrades (Radiant/Cursed/Base) are represented by a simple enum.
+  - CardInstance supports additional temporary/relic-based buffs and debuffs (e.g., cost/damage modifiers, enemy effects) that can be applied and cleared at runtime.
+  - Upgrades themselves do not store runtime state, but temporary effects can.
+
+- **Usage Refresh:**
+  - CardInstance exposes a `RefreshUses()` method, called at the start of a stage or by event, to reset usage for single-use/degrading cards.
+
+- **Visual State:**
+  - CardInstance exposes explicit properties for “burnt”/“degraded” state and upgrade visual state.
+  - UI queries these properties directly, not implementation details.
+
+- **Unique ID:**
+  - Each CardInstance has a unique, persistent ID for analytics, debugging, and meta-progression.
+  - This ID persists across save/load.
+
+- **Serialization:**
+  - CardInstance and all relevant state (usage, upgrades, temporary effects, unique ID) are serialized for both mid-run and between-run save/load.
+  - Deck, hand, discard, and in-play cards are all serialized.
+
+- **Extensibility:**
+  - Upgrade and usage types are hardcoded enums for now, but CardInstance is designed to allow new temporary effects and visual states as needed.
 
 ---
 

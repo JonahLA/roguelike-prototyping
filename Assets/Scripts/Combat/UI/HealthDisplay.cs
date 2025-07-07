@@ -75,29 +75,23 @@ public class HealthDisplay : MonoBehaviour
     private Health _healthComponent;
 
     // UI state
-    private List<Image> _heartImages = new();
+    private readonly List<Image> _heartImages = new();
     private float _currentDisplayedHealth;
     private float _maxDisplayedHealth;
     private void Awake()
     {
-        // Validate required components
         ValidateComponents();
     }
 
     private void Start()
     {
-        // Subscribe to centralized player health events
         HealthManager.PlayerHealthChanged += OnHealthChanged;
-
-        // Request initial health state from any existing player
         RequestInitialHealthState();
     }
     private void OnDestroy()
     {
-        // Unsubscribe from centralized health events
         HealthManager.PlayerHealthChanged -= OnHealthChanged;
 
-        // Clean up any remaining heart objects safely
         if (_heartImages != null)
         {
             foreach (var heart in _heartImages)
@@ -143,7 +137,6 @@ public class HealthDisplay : MonoBehaviour
             Health playerHealth = player.GetComponent<Health>();
             if (playerHealth != null)
             {
-                // Initialize display with current player health
                 _currentDisplayedHealth = playerHealth.CurrentHealth;
                 _maxDisplayedHealth = playerHealth.MaxHealth;
                 CreateHeartUI();
@@ -251,7 +244,7 @@ public class HealthDisplay : MonoBehaviour
     private IEnumerator AnimateHeartChange(float targetScale)
     {
         // Animate all hearts that are affected
-        List<Vector3> originalScales = new List<Vector3>();
+        List<Vector3> originalScales = new();
 
         // Store original scales
         foreach (var heart in _heartImages)
@@ -306,8 +299,7 @@ public class HealthDisplay : MonoBehaviour
     /// <param name="index">Index of this heart (0-based)</param>
     private void SetupHeartPosition(Image heartImage, int index)
     {
-        RectTransform heartRect = heartImage.GetComponent<RectTransform>();
-        if (heartRect == null) return;
+        if (!heartImage.TryGetComponent<RectTransform>(out var heartRect)) return;
 
         // Determine which column (left = 0, right = 1)
         bool isRightColumn = (index % 2) == 1;
