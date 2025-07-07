@@ -74,6 +74,14 @@ This plan details the modular, extensible implementation of the card system, inc
 
 ---
 
+### 5.75. Revamped Enemy System
+
+- [ ] **Enemy System**
+  - (Review the existing enemy system and determine if it is sufficient for the new card system.
+    If not, then create a plan for a new enemy system that can handle both managing enemies for the
+    rooms (so rooms know when they are cleared - - can open doors) and for the cards (so card 
+    targeting strategies can efficiently query for the enemies they need).)
+
 ### 6. Card Effects Implementation
 
 - [ ] **Damage Card Effect**
