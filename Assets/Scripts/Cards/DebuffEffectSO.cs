@@ -19,14 +19,14 @@ public class DebuffEffectSO : CardEffectSO
     /// <param name="targets">The list of GameObjects to debuff.</param>
     public override void ApplyEffect(GameObject user, List<GameObject> targets)
     {
-        foreach (var target in targets)
-        {
-            // TODO: Implement debuff logic (e.g., add a DebuffComponent)
-            var debuffable = target.GetComponent<DebuffableComponent>();
-            if (debuffable != null)
-            {
-                debuffable.ApplyDebuff(DebuffDuration);
-            }
-        }
+        // foreach (var target in targets)
+        // {
+        //     // TODO: Implement debuff logic (e.g., add a DebuffComponent)
+        //     var debuffable = target.GetComponent<DebuffableComponent>();
+        //     if (debuffable != null)
+        //     {
+        //         debuffable.ApplyDebuff(DebuffDuration);
+        //     }
+        // }
     }
 }

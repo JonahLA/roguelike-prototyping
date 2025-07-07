@@ -20,7 +20,7 @@ public class HealthiestEnemyTargetingSO : CardTargetingStrategySO
         float maxHealth = float.MinValue;
         foreach (var enemy in enemies)
         {
-            var health = enemy.GetComponent<HealthComponent>();
+            var health = enemy.GetComponent<Health>();
             if (health != null && health.CurrentHealth > maxHealth)
             {
                 maxHealth = health.CurrentHealth;

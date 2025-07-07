@@ -31,5 +31,12 @@ public class CardSO : ScriptableObject
     /// The targeting strategy used to select targets for this card's effect.
     /// </summary>
     public CardTargetingStrategySO TargetingStrategy;
-    // For extensibility: upgrades, stat modifiers, etc. can be added here
+    /// <summary>
+    /// The default usage type for the card (base, degraded, or single-use).
+    /// </summary>
+    public CardUsageType defaultUsageType;
+    /// <summary>
+    /// The default max number of uses 
+    /// </summary>
+    public int defaultMaxUses;
 }

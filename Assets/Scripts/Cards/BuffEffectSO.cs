@@ -22,11 +22,11 @@ public class BuffEffectSO : CardEffectSO
         foreach (var target in targets)
         {
             // TODO: Implement buff logic (e.g., add a BuffComponent)
-            var buffable = target.GetComponent<BuffableComponent>();
-            if (buffable != null)
-            {
-                buffable.ApplyBuff(BuffDuration);
-            }
+            // var buffable = target.GetComponent<BuffableComponent>();
+            // if (buffable != null)
+            // {
+            //     buffable.ApplyBuff(BuffDuration);
+            // }
         }
     }
 }
