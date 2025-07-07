@@ -37,11 +37,28 @@ This plan details the modular, extensible implementation of the card system, inc
 
 ### 3. Flare Meter System
 
-- [ ] **FlareMeter**
+- [x] **FlareMeter** _(Complete)_
   - Tracks current/max flare points.
-  - Increases over time (tick-based or per-second).
-  - Exposes methods for other systems (e.g., cards, pickups) to add flare.
+  - Increases over time (tick-based or per-second; default is 1/sec, but this can be modified by items/cards).
+  - Supports instant flare gain (e.g., from card effects or pickups).
+  - Default max flare is 5, but this can be upgraded by effects or items.
+  - Exposes both C# events and UnityEvents for flare value changes (for UI and other systems).
+  - FlareMeter is a MonoBehaviour attached to the player; UI listens to events or reads from a data source.
+  - Flare persists between rooms, but resets to max at the start of each stage.
   - Notifies UI and DeckManager on change.
+
+---
+
+### FlareMeter Design Decisions (2025-07-06)
+
+- Flare increases at a fixed rate per second (default 1/sec), but this rate can be increased/decreased by items/cards.
+- Flare can also be increased instantly by effects (e.g., card play, pickups).
+- Default max flare is 5, but this can be upgraded.
+- FlareMeter exposes both UnityEvents and C# events for value changes.
+- FlareMeter is a MonoBehaviour attached to the player.
+- Flare persists between rooms, but resets to max at the start of each stage.
+- UI listens to FlareMeter events or reads from a ScriptableObject (or similar data source).
+- FlareMeter exposes both integer and float flare values for UI (discrete and smooth fill support).
 
 ---
 
@@ -77,10 +94,7 @@ This plan details the modular, extensible implementation of the card system, inc
 ### 5.75. Revamped Enemy System
 
 - [ ] **Enemy System**
-  - (Review the existing enemy system and determine if it is sufficient for the new card system.
-    If not, then create a plan for a new enemy system that can handle both managing enemies for the
-    rooms (so rooms know when they are cleared - - can open doors) and for the cards (so card 
-    targeting strategies can efficiently query for the enemies they need).)
+  - (Review the existing enemy system and determine if it is sufficient for the new card system. If not, then create a plan for a new enemy system that can handle both managing enemies for the rooms (so rooms know when they are cleared - - can open doors) and for the cards (so card targeting strategies can efficiently query for the enemies they need).)
 
 ### 6. Card Effects Implementation
 
@@ -111,6 +125,13 @@ This plan details the modular, extensible implementation of the card system, inc
   - Refine UI/UX for clarity and responsiveness.
 - [ ] **Playtest**
   - Draw from the deck, spend flare, play/discard cards, and see effects on enemies.
+
+---
+
+### 99. Tech Debt
+
+- [ ] **Coding Standards**
+  - Run new scripts through coding standards (i.e., did any of the new card-based scripts use the coding standards? like private fields having underscores?)
 
 ---
 
