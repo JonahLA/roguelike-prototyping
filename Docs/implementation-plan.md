@@ -132,7 +132,7 @@ Each vertical slice follows the cycle: **design → code → playtest**.
 - `DeckManager`:
   - Draw pile, discard pile
   - Shuffle on start and when deck exhausted
-  - Draw a hand of up to 10 cards
+  - Draw a hand of 5 cards
   - Play card: subtract flare cost, move to discard pile, trigger effect
 - UI:
   - Hand panel with card placeholders
